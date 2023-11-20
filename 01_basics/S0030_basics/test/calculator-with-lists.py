@@ -34,8 +34,12 @@ while loopme == True:
             finalcal = calthis[0] * calthis[1]
             loopingthechosecaltype = False
         elif chosecaltype == "/":
-            finalcal = calthis[0] / calthis[1]
-            loopingthechosecaltype = False
+            try:
+                finalcal = calthis[0] / calthis[1]
+                loopingthechosecaltype = False
+            except:
+                print("cannot devide by 0")
+                loopingthechosecaltype = True
         else:
             print("bruh not one of them")
             loopingthechosecaltype = True
