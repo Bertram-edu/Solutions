@@ -120,7 +120,7 @@ morris = {"turn": 0, "sleepiness": 0, "thirst": 0, "hunger": 0, "whisky": 0, "go
 
 while not dead() and morris["turn"] < 1000:
     morris["turn"] += 1
-    for i in range(1000000): # use to set about with this it can be how ever much you want
+    for i in range(1000000): # with this it can be how ever much you want
         mine()
         mine()
         sleep()
