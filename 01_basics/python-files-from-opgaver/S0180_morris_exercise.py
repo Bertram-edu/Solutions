@@ -39,25 +39,27 @@ time.sleep(1)
 
 #functions
 
+def turn():
+    morris["turn"] += 1
+    print()
+    print(morris)
+
 def check():
-    i = True
-    while i == True:
-        if morris["sleepiness"] < 0:
+    if morris["sleepiness"] < 0:
             morris["sleepiness"] = 0
 
-        elif morris["thirst"] < 0:
+    if morris["thirst"] < 0:
             morris["thirst"] = 0
 
-        elif morris["hunger"] < 0:
+    if morris["hunger"] < 0:
             morris["hunger"] = 0
 
-        elif morris["whisky"] < 0:
+    if morris["whisky"] < 0:
             morris["whisky"] = 0
 
-        elif morris["gold"] < 0:
+    if morris["gold"] < 0:
             morris["gold"] = 0
-        else:
-            i = False
+    turn()
 
 
 def sleep():
@@ -73,6 +75,7 @@ def mine():
     morris["hunger"] += 5
     morris["gold"] += 5
     check()
+    print("mine")
 
 def eat():
     if morris["gold"] > 2:
@@ -119,18 +122,27 @@ morris = {"turn": 0, "sleepiness": 0, "thirst": 0, "hunger": 0, "whisky": 0, "go
 # code
 
 while not dead() and morris["turn"] < 1000:
-    morris["turn"] += 1
-    for i in range(1000000): # with this it can be how ever much you want
-        mine()
-        mine()
-        sleep()
+    while morris["sleepiness"] >= 20 and morris["turn"] < 1000:
+        if morris["sleepiness"] >= 80:
+            for i in range(4):
+                if morris["turn"] < 1000:
+                    sleep()
+        elif morris["sleepiness"] >= 20:
+            sleep()
+        print("sleep")
+    while morris["hunger"] >= 20 and morris["gold"] >= 2 and morris["turn"] < 1000:
         eat()
+        print("eat")
+    while morris["thirst"] >= 20 and morris["gold"] >= 1 and morris["turn"] < 1000:
         buy_whisky()
         drink()
-        sleep()
-        sleep()
-    print()
-    print(morris)
+        print("drink")
+    if morris["turn"] < 1000:
+        for i in range(8):
+            if morris["turn"] < 1000:
+                mine()
+
+
 
 
 
