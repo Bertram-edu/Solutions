@@ -141,8 +141,6 @@ while not dead() and morris["turn"] < 1000:
         for i in range(8):
             if morris["turn"] < 1000:
                 mine()
-    if morris["turn"] > 950:
-        time.sleep(2)
 
 
 
