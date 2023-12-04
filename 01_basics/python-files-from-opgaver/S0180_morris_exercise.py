@@ -130,10 +130,10 @@ while not dead() and morris["turn"] < 1000:
         elif morris["sleepiness"] >= 20:
             sleep()
         print("sleep")
-    while morris["hunger"] >= 20 and morris["gold"] >= 2 and morris["turn"] < 1000:
+    while morris["hunger"] >= 40 and morris["gold"] >= 2 and morris["turn"] < 1000:
         eat()
         print("eat")
-    while morris["thirst"] >= 20 and morris["gold"] >= 1 and morris["turn"] < 1000:
+    while morris["thirst"] >= 40 and morris["gold"] >= 1 and morris["turn"] < 999:
         buy_whisky()
         drink()
         print("drink")
@@ -141,6 +141,8 @@ while not dead() and morris["turn"] < 1000:
         for i in range(8):
             if morris["turn"] < 1000:
                 mine()
+    if morris["turn"] > 950:
+        time.sleep(2)
 
 
 
