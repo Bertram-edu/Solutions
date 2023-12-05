@@ -25,109 +25,117 @@ time.sleep(1)
 
 #functions
 class miner:
+
+    def __init__(self):
+        self.turns = 0
+        self.sleepiness = 0
+        self.thirst = 0
+        self.hunger = 0
+        self.whisky = 0
+        self.gold = 0
+
+    def __repr__(self):
+        return f"(turn: {self.turns}, sleepiness: {self.sleepiness}, thirst: {self.thirst}, hunger: {self.hunger}, whisky: {self.whisky}, gold: {self.gold})" # look like this: {'turn': 1000, 'sleepiness': 35, 'thirst': 74, 'hunger': 71, 'whisky': 0, 'gold': 1450}
+
+
     def turn(self):
-        morrisdict["turn"] += 1
+        self.turns += 1
         print()
-        print(morrisdict)
+        print(morris)
+
 
     def check(self):
-        if morrisdict["sleepiness"] < 0:
-                morrisdict["sleepiness"] = 0
+        if self.sleepiness < 0:
+            self.sleepiness = 0
 
-        if morrisdict["thirst"] < 0:
-                morrisdict["thirst"] = 0
+        if self.thirst < 0:
+            self.thirst = 0
 
-        if morrisdict["hunger"] < 0:
-                morrisdict["hunger"] = 0
+        if self.hunger < 0:
+            self.hunger = 0
 
-        if morrisdict["whisky"] < 0:
-                morrisdict["whisky"] = 0
+        if self.whisky < 0:
+            self.whisky = 0
 
-        if morrisdict["gold"] < 0:
-                morrisdict["gold"] = 0
+        if self.gold < 0:
+            self.gold = 0
         self.turn()
 
 
     def sleep(self):
-        morrisdict["sleepiness"] -= 10
-        morrisdict["thirst"] += 1
-        morrisdict["hunger"] += 1
+        self.sleepiness -= 10
+        self.thirst += 1
+        self.hunger += 1
         self.check()
 
 
     def mine(self):
-        morrisdict["sleepiness"] += 5
-        morrisdict["thirst"] += 5
-        morrisdict["hunger"] += 5
-        morrisdict["gold"] += 5
+        self.sleepiness += 5
+        self.thirst += 5
+        self.hunger += 5
+        self.gold += 5
         self.check()
         print("mine")
 
     def eat(self):
-        if morrisdict["gold"] > 2:
-            morrisdict["sleepiness"] += 5
-            morrisdict["thirst"] -=5
-            morrisdict["hunger"] -= 20
-            morrisdict["gold"] -= 2
+        if self.gold > 2:
+            self.sleepiness += 5
+            self.thirst -=5
+            self.hunger -= 20
+            self.gold -= 2
             self.check()
         else:
             print(f"morris doesn't have enough gold")
 
     def buy_whisky(self):
-        if morrisdict["whisky"] < 10:
-            if morrisdict["gold"] > 1:
-                morrisdict["sleepiness"] += 5
-                morrisdict["thirst"] += 1
-                morrisdict["hunger"] += 1
-                morrisdict["whisky"] += 1
-                morrisdict["gold"] -= 1
+        if self.whisky < 10:
+            if self.gold > 1:
+                self.sleepiness += 5
+                self.thirst += 1
+                self.hunger += 1
+                self.whisky += 1
+                self.gold -= 1
                 self.check()
             else:
                 print(f"morris doesn't have enough gold")
         else:
             print(f"morris can't hold any more whiskey")
     def drink(self):
-        if morrisdict["whisky"] > 0:
-            morrisdict["sleepiness"] += 5
-            morrisdict["thirst"] -= 15
-            morrisdict["hunger"] -= 1
-            morrisdict["whisky"] -= 1
+        if morris.whisky > 0:
+            self.sleepiness += 5
+            self.thirst -= 15
+            self.hunger -= 1
+            self.whisky -= 1
             self.check()
         else:
             print("morris doesn't have any whisky")
 
     def dead(self):
-        return morrisdict["sleepiness"] > 100 or morrisdict["thirst"] > 100 or morrisdict["hunger"] > 100
+        return self.sleepiness > 100 or self.thirst > 100 or self.hunger > 100
 
 
 
-morrisdict = {"turn": 0, "sleepiness": 0, "thirst": 0, "hunger": 0, "whisky": 0, "gold": 0}  # dictionary
+# morrisdict = {"turn": 0, "sleepiness": 0, "thirst": 0, "hunger": 0, "whisky": 0, "gold": 0}  # dictionary
 
 morris = miner()
 
-while not morris.dead() and morrisdict["turn"] < 1000:
-
-    while morrisdict["sleepiness"] >= 20 and morrisdict["turn"] < 1000:
-        if morrisdict["sleepiness"] >= 80:
+while not morris.dead() and morris.turns < 1000:
+    while morris.sleepiness >= 20 and morris.turns < 1000:
+        if morris.sleepiness >= 80:
             for i in range(4):
-                if morrisdict["turn"] < 1000:
+                if morris.turns < 1000:
                     morris.sleep()
-        elif morrisdict["sleepiness"] >= 20:
+        elif morris.sleepiness >= 20:
             morris.sleep()
         print("sleep")
-    while morrisdict["hunger"] >= 40 and morrisdict["gold"] >= 2 and morrisdict["turn"] < 1000:
+    while morris.hunger >= 40 and morris.gold >= 2 and morris.turns < 1000:
         morris.eat()
         print("eat")
-    while morrisdict["thirst"] >= 40 and morrisdict["gold"] >= 1 and morrisdict["turn"] < 999:
+    while morris.thirst >= 40 and morris.gold >= 1 and morris.turns < 999:
         morris.buy_whisky()
         morris.drink()
         print("drink")
-    if morrisdict["turn"] < 1000:
+    if morris.turns < 1000:
         for i in range(8):
-            if morrisdict["turn"] < 1000:
+            if morris.turns < 1000:
                 morris.mine()
-    if morrisdict["turn"] > 950:
-        time.sleep(0)
-
-
-
