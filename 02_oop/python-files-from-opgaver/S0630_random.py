@@ -41,4 +41,4 @@ print()
 
 max_number = 8
 for i in range(3):
-    print(f"A random number between 0 and {max_number}: {random.random()*max_number}") # prints out a random float number then times (*) it with "max_number"
+    print(f"A random number between 0 and {max_number}: {random.random()*max_number}") # prints out a random float number then times (*) it with "max_number" #test
