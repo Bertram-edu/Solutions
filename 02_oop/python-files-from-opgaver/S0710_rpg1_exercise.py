@@ -31,4 +31,61 @@ og sammenlign det med lærerens løsning i S0730_rpg1_solution.py
 
 Send derefter denne Teams-besked til din lærer: <filename> færdig
 Fortsæt derefter med den næste fil."""
+import time
 
+time.sleep(1)
+
+
+class Character:
+    def __init__(self, name, health, attackpower):
+        self.name = name
+        self.max_health = health
+        self._current_health = health
+        self.attackpower = attackpower
+
+    def __repr__(self):
+        return f"{self.name=} {self.max_health=} {self._current_health=} {self.attackpower=}"
+
+    def hit(self, other):
+        print()
+        print(f"{self.name} has hit {other.name} dealing {self.attackpower} damage")
+        print()
+        other.get_hit(self.attackpower)
+
+
+    def get_hit(self, attackpower):
+        self._current_health -= attackpower
+
+    def get_healed(self, healpower):
+        self._current_health += healpower
+
+
+class Healer(Character):
+
+    def __init__(self, name, health, healpower):
+        self.name = name
+        self.max_health = health
+        self._current_health = health
+        self.healpower = healpower
+        self.attackpower = 0
+
+    def heal(self, other):
+        other.get_healed(self.healpower)
+
+
+hero1 = Character("Bozeto", 100, 20)
+hero2 = Character("Andananda", 110, 24)
+hero3 = Healer("DoctorX", 75, 15)
+print(hero1)
+print(hero2)
+print(hero3)
+hero1.hit(hero2)
+print(hero2)
+hero3.heal(hero2)
+print(hero2)
+
+print()
+
+print(hero1)
+print(hero2)
+print(hero3)
