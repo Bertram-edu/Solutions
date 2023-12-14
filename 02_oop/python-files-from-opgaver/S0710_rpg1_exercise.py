@@ -44,7 +44,7 @@ class Character:
         self.attackpower = attackpower
 
     def __repr__(self):
-        return f"{self.name=} {self.max_health=} {self._current_health=} {self.attackpower=}"
+        return f"name: ({self.name}) max health: ({self.max_health}) current health: ({self._current_health}) attack power: ({self.attackpower})"
 
     def hit(self, other):
         print()
@@ -57,12 +57,18 @@ class Character:
         self._current_health -= attackpower
 
     def get_healed(self, healpower):
-        self._current_health += healpower
+        if self.max_health > self._current_health:
+            self._current_health += healpower
+        else:
+            print(f"{self.name} has reached their max_health of {self.max_health}")
+            self._current_health = self.max_health
+            print(f"{self.name}'s health has been set to their max health of {self.max_health}")
 
 
 class Healer(Character):
 
     def __init__(self, name, health, healpower):
+        super().__init__(name, health, 0)
         self.name = name
         self.max_health = health
         self._current_health = health
@@ -70,6 +76,9 @@ class Healer(Character):
         self.attackpower = 0
 
     def heal(self, other):
+        print()
+        print(f"{self.name} has healed {other.name} with a healpower of {self.healpower} {other.name} now has {other._current_health + self.healpower}")
+        print()
         other.get_healed(self.healpower)
 
 
@@ -89,3 +98,41 @@ print()
 print(hero1)
 print(hero2)
 print(hero3)
+
+print()
+print("hero2")
+print()
+
+print(hero2)
+hero1.hit(hero2)
+print(hero2)
+hero3.heal(hero2)
+print(hero2)
+
+print()
+print("hero1")
+print()
+
+print(hero1)
+hero2.hit(hero1)
+print(hero1)
+hero3.heal(hero1)
+print(hero1)
+
+print()
+print("hero3")
+print()
+
+print(hero3)
+hero1.hit(hero3)
+hero1.hit(hero3)
+print(hero3)
+hero3.heal(hero3)
+print(hero3)
+
+print()
+
+print(hero1)
+print(hero2)
+print(hero3)
+
