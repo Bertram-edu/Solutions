@@ -36,7 +36,7 @@ import random
 time.sleep(1)
 
 
-class Character: # can hit someone or fail and hit themself
+class Character:  # can hit someone or fail and hit themselves
     def __init__(self, name, health, attackpower):
         self.name = name
         self.max_health = health
@@ -44,7 +44,7 @@ class Character: # can hit someone or fail and hit themself
         self.attackpower = attackpower
 
     def __repr__(self):
-        return f"name: ({self.name}) max health: ({self.max_health}) current health: ({self._current_health}) attack power: ({self.attackpower})"
+        return (f"name: ({self.name}) max health: ({self.max_health}) current health: ({self._current_health}) attack "f"power: ({self.attackpower})")
 
     def hit(self, other):
         if self.death_check():
@@ -56,7 +56,7 @@ class Character: # can hit someone or fail and hit themself
                 other.get_hit(self.attackpower)
             elif temp == 19:
                 print()
-                print(f"{self.name} tried to hit {other.name} in the face but missed hitting themself in the face dealing {self.attackpower} damage to themself {self.name} now has {self._current_health - self.attackpower}")
+                print(f"{self.name} tried to hit {other.name} in the face but missed hitting themself in the face dealing {self.attackpower} damage to themself {self.name} now has {self._current_health - self.attackpower} health")
                 print()
                 self.get_hit(self.attackpower)
             else:
@@ -67,8 +67,9 @@ class Character: # can hit someone or fail and hit themself
             print()
             print(f"{self.name} is dead and cannot do this")
             print()
+
     def death_check(self):
-        return self._current_health > 0
+        return self._current_health >= 0
 
     def get_hit(self, attackpower):
         self._current_health -= attackpower
@@ -132,7 +133,8 @@ class Healer(Character): # Healer can try to heal someone but has the chance to 
             print(f"{self.name} is dead and cannot do this")
             print()
 
-class Wizard(Character): # Wizard can cast spells dealing the attackpower defined when making the character they can also miss hitting themself dealing them damage instead
+
+class Wizard(Character):  # Wizard can cast spells dealing the attackpower defined when making the character they can also miss hitting themselves dealing them damage instead
 
     def __init__(self, name, health, magicpower):
         super().__init__(name, health, 0)
@@ -163,7 +165,9 @@ class Wizard(Character): # Wizard can cast spells dealing the attackpower define
             print()
             print(f"{self.name} is dead and cannot do this")
             print()
-class Warrior(Character): # Warrior has light attack and heavy attack light attack will hit with the attackpower that's defined when making the character if lucky enough can cause double damage meanwhile the heavy attack has double the amount of attackpower by default but has less luck in success if unlucky enough they can miss hitting their foot dealing half their attack power to themself
+
+
+class Warrior(Character):  # Warrior has light attack and heavy attack light attack will hit with the attackpower that's defined when making the character if lucky enough can cause double damage meanwhile the heavy attack has double the amount of attackpower by default but has less luck in success if unlucky enough they can miss hitting their foot dealing half their attack power to themselves
 
     def __init__(self, name, health, attackpower):
         super().__init__(self, name, health)
@@ -217,54 +221,75 @@ class Warrior(Character): # Warrior has light attack and heavy attack light atta
             print()
 
 
-
-
-
 hero1 = Character("Bozeto", 100, 20)
 hero2 = Character("Andananda", 110, 24)
-hero3 = Healer("DoctorX", 75, 15)
+hero3 = Healer("DoctorX", 75, 20)
 hero4 = Wizard("wise old man", 73, 20)
 hero5 = Warrior("Firestorm", 80, 20)
-print(hero1)
-print(hero2)
-print(hero3)
-hero1.hit(hero2)
-print(hero2)
-hero3.heal(hero2)
-print(hero2)
 
-hero4.spell(hero2)
+herolist = [hero1, hero2, hero3, hero4, hero5]
 
 
-print(hero4)
-print(hero2)
+for i in range(100):
+    heroselector = random.randint(1, 5)
+    if heroselector == 1:
+        print(f"hero {heroselector}: \n")
+        whichherotohit = random.randint(1, 4)
+        hero1.hit(herolist[whichherotohit])
 
-print()
-print(hero1)
-print(hero5)
+    elif heroselector == 2:
 
-hero5.light_attack(hero1)
+        print(f"hero {heroselector}: \n")
+        temp = True
+        while temp is True or whichherotohit == 2:
+            temp = False
+            whichherotohit = random.randint(0, 4)
+        hero2.hit(herolist[whichherotohit])
 
-print(hero1)
-print(hero5)
+    elif heroselector == 3:
 
-print()
-print()
+        print(f"hero {heroselector}: \n")
+        whichherotohit = random.randint(0, 4)
+        hero3.heal(herolist[whichherotohit])
 
-print(hero1)
-print(hero5)
+    elif heroselector == 4:
 
-hero5.heavy_attack(hero1)
+        print(f"hero {heroselector}: \n")
+        temp = True
+        while temp is True or whichherotohit == 3:
+            temp = False
+            whichherotohit = random.randint(1, 4)
+        hero4.spell(herolist[whichherotohit])
 
-print(hero1)
-print(hero5)
+    elif heroselector == 5:
 
-print(hero1)
+        print(f"hero {heroselector}: \n")
+        temp = True
+        while temp is True or whichherotohit == 4:
+            temp = False
+            whichherotohit = random.randint(1, 4)
 
-hero5.heavy_attack(hero1)
-hero5.heavy_attack(hero1)
-hero5.heavy_attack(hero1)
+        heroattackselector = random.randint(1, 2)
+        if heroattackselector == 1:
+            hero5.light_attack(herolist[whichherotohit])
+        elif heroattackselector == 2:
+            hero5.heavy_attack(herolist[whichherotohit])
+        else:
+            print("something went wrong")
 
-print(hero1)
 
-hero1.hit(hero5)
+print("\nconclusion: \n")
+
+for i in range(len(herolist)):
+    if not herolist[i].death_check():
+        print(f"{herolist[i].name} is dead")
+    elif herolist[i].death_check():
+        print(f"{herolist[i].name} is alive")
+    else:
+        print("something went wrong")
+for i in range(3):
+    print()
+
+for i in range(len(herolist)):
+    print(herolist[i])
+
