@@ -8,6 +8,7 @@ Send derefter denne Teams-meddelelse til din lærer: <filename> færdig
 Fortsæt derefter med den næste fil."""
 
 
+
 def count_number(number):
     counter = 0
     for row in rows:

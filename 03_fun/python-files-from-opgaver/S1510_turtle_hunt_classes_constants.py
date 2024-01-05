@@ -73,6 +73,7 @@ Kun hvis du er nysgerrig og elsker detaljer:
     Her er den fulde dokumentation for skildpaddegrafikken:
     https://docs.python.org/3.3/library/turtle.html"""
 
+
 import turtle  # this imports a library called "turtle". A library is (someone else's) python code, that you can use in your own program.
 import random
 from S1520_turtle_hunt_service import distance, direction

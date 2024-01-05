@@ -32,6 +32,7 @@ Send derefter denne Teams-meddelelse til din lærer: <filename> færdig
 Fortsæt derefter med den næste fil."""
 
 
+
 def pyramid(lines):
     numbers = [1, 1]
     0

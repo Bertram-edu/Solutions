@@ -8,6 +8,7 @@ Send derefter denne Teams-meddelelse til din lærer: <filename> færdig
 Fortsæt derefter med den næste fil."""
 
 
+
 def pyramid2(lines, firstline):
     strings = firstline.split(" ")  # split firstline into a list of strings
     numbers = []  # numbers is a list and will later contain numbers

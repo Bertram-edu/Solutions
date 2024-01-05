@@ -6,6 +6,7 @@ Kør denne fil for at starte skildpaddejagten.
 
 Læs øvelsesbeskrivelsen i S1510_turtle_hunt_classes_constants.py."""
 
+
 import turtle  # this imports a library called "turtle". A library is (someone else's) python code, that you can use in your own program.
 import random
 import S1510_turtle_hunt_classes_constants as Tclass

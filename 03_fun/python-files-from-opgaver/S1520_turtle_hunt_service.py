@@ -4,6 +4,7 @@ Du må ikke redigere denne fil!
 
 Læs øvelsesbeskrivelsen i S1510_turtle_hunt_classes_constants.py."""
 
+
 import math
 
 
