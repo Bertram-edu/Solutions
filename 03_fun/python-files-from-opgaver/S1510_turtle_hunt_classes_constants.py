@@ -72,14 +72,16 @@ Senere:
 Kun hvis du er nysgerrig og elsker detaljer:
     Her er den fulde dokumentation for skildpaddegrafikken:
     https://docs.python.org/3.3/library/turtle.html"""
-
-
+import time
 import turtle  # this imports a library called "turtle". A library is (someone else's) python code, that you can use in your own program.
 import random
 from S1520_turtle_hunt_service import distance, direction
 
+olddirection = 0
+olddistance = 0
+desideddegree = 0
 
-class PlayerName1(turtle.Turtle):
+class Platic_hater(turtle.Turtle):
 
     def __init__(self):
         super().__init__()  # Here, this is equivalent to turtle.Turtle.__init__(self)
@@ -95,7 +97,50 @@ class PlayerName1(turtle.Turtle):
         # Example for use of the service functions distance() and direction
         # print(f'{distance(positions[0], positions[1])=}   {direction(positions[0], positions[1])=}')  # print distance and direction from prey to hunter1
 
-        degree = 3  # When the turtle rotates the same amount each turn,  it will just run in a circle. Make this function smarter!
+        #  global olddirection
+        global olddistance
+        global temp
+        global newdistance
+        global desideddegree
+
+        temphunterlistfortesting = [positions[1], positions[2], positions[3]]
+        #hunternamelist = ["hunter-1", "hunter-2", "hunter-3"]
+        #
+        #for i, hunternames in zip(temphunterlistfortesting, hunternamelist):
+        #    print(f"\n{hunternames} {distance(positions[i], positions[1])}")
+        #print(f"\nprey {self.position()}")
+        #newdirection = int(direction(self.position(), positions[1]))
+
+
+        #  print(f"newdirection: {newdirection}")
+        #  print(f"olddirection: {olddirection}")
+        # leftorright = bool(newdistance < olddistance) and temp == True
+        templist = []
+        for i in range(len(temphunterlistfortesting)):
+            templist.append(int(distance(self.position(), positions[i+1])))
+        newdistance = templist.index(min(templist))
+        print(f"newdistance: {newdistance}")
+        print(f"olddistance: {olddistance}")
+
+        print(f"test: {int(distance(self.position(), temphunterlistfortesting[newdistance]))=}")
+        print(f"degree: {desideddegree}")
+
+        if newdistance < olddistance:
+            desideddegree = random.randint(-10, 10)
+        elif newdistance > olddistance:
+            desideddegree = 0
+        print("test")
+
+        #  olddirection = int(direction(self.position(), positions[1]))
+        for j in range(3):
+            print(f"{int(distance(self.position(), temphunterlistfortesting[j]))=}")
+        olddistance = int(distance(self.position(), positions[1]))
+        #print(olddistance)
+        #print(type(olddistance))
+
+
+        degree = desideddegree  # When the turtle rotates the same amount each turn,  it will just run in a circle. Make this function smarter!
+        desideddegree = 0
         self.orientation += degree
         self.orientation %= 360
         # print(self.orientation)
@@ -129,5 +174,5 @@ CAUGHT_DISTANCE = 10  # Hunt is over, when a hunter is nearer to the prey than t
 random.seed(2)  # use seed() if you want reproducible random numbers for debugging purposes. You may change the argument of seed().
 
 
-class1 = PlayerName1  # (red prey) Replace PlayerName1 by your own class name here.
-class2 = PlayerName1  # (green prey) For testing your code, replace PlayerName1 by your own class name here. Later replace this by your sparring partner's class name.
+class1 = Platic_hater  # (red prey) Replace PlayerName1 by your own class name here.
+class2 = Platic_hater  # (green prey) For testing your code, replace PlayerName1 by your own class name here. Later replace this by your sparring partner's class name.
