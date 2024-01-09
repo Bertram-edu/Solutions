@@ -81,11 +81,18 @@ olddirection = 0
 olddistance = 0
 desideddegree = 0
 
+hunterolddistance = 0
+hunterdesideddegree = 0
+
 class Platic_hater(turtle.Turtle):
 
     def __init__(self):
         super().__init__()  # Here, this is equivalent to turtle.Turtle.__init__(self)
         self.orientation = 0  # used to keep track of the turtle's current orientation (the direction it is heading)
+
+        self.hunterdesideddegree = 0
+        self.hunterolddistance = 0
+        self.distancebetween = 0
 
     def rotate_prey(self, positions):  # turtle will be turned right <degree> degrees. Use negative values for left turns.
         # self: the turtle that shall be rotated
@@ -97,44 +104,61 @@ class Platic_hater(turtle.Turtle):
         # Example for use of the service functions distance() and direction
         # print(f'{distance(positions[0], positions[1])=}   {direction(positions[0], positions[1])=}')  # print distance and direction from prey to hunter1
 
-        #  global olddirection
+        #  global variables
         global olddistance
-        global temp
-        global newdistance
         global desideddegree
 
-        temphunterlistfortesting = [positions[1], positions[2], positions[3]]
-        #hunternamelist = ["hunter-1", "hunter-2", "hunter-3"]
-        #
-        #for i, hunternames in zip(temphunterlistfortesting, hunternamelist):
-        #    print(f"\n{hunternames} {distance(positions[i], positions[1])}")
-        #print(f"\nprey {self.position()}")
-        #newdirection = int(direction(self.position(), positions[1]))
+        hunterlist = [positions[1], positions[2], positions[3]]
 
 
-        #  print(f"newdirection: {newdirection}")
-        #  print(f"olddirection: {olddirection}")
-        # leftorright = bool(newdistance < olddistance) and temp == True
-        templist = []
-        for i in range(len(temphunterlistfortesting)):
-            templist.append(int(distance(self.position(), positions[i+1])))
-        newdistance = templist.index(min(templist))
-        print(f"newdistance: {newdistance}")
-        print(f"olddistance: {olddistance}")
 
-        print(f"test: {int(distance(self.position(), temphunterlistfortesting[newdistance]))=}")
-        print(f"degree: {desideddegree}")
+        templist1 = []
+        for i in range(len(hunterlist)):
+            templist1.append(int(distance(self.position(), positions[i+1])))
+        tempnewdistance = templist1.index(min(templist1))
+        newdistance = int(distance(self.position(), hunterlist[tempnewdistance]))
+        # print(f"tempnewdistance: {tempnewdistance}")
+        # print(f"newdistance: {newdistance}")
+        # print(f"olddistance: {olddistance}")
 
-        if newdistance < olddistance:
-            desideddegree = random.randint(-10, 10)
-        elif newdistance > olddistance:
-            desideddegree = 0
-        print("test")
+        # print(f"test: {int(distance(self.position(), hunterlist[tempnewdistance]))=}")
+        # print(self.heading())
 
-        #  olddirection = int(direction(self.position(), positions[1]))
+        temp = True
+        if self.xcor() > 295 or self.xcor() < -295:
+            temp = False
+            desideddegree = 180
+        if self.ycor() > 295 or self.ycor() < -295:
+            temp = False
+            desideddegree = 180
+        if newdistance < olddistance and temp:
+
+            heading = self.heading()
+            print(heading)
+
+            if heading >= 180:
+                desideddegree = random.randint(0, 20)
+            elif heading <= 180:
+                desideddegree = random.randint(-20, 0)
+
+
+            # negitiveorpositive = True #bool(random.getrandbits(1))
+            # if negitiveorpositive:
+            #     desideddegree = random.randint(1, 20)
+            # elif not negitiveorpositive:
+            #     desideddegree = random.randint(-20, -1)
+
+
+        elif newdistance > olddistance and temp:
+            desideddegree = 0  # random.randint(-3, 3)
+        print(f"prey-degree: {desideddegree}")
+        print(self.position())
+
+        templist2 = []
         for j in range(3):
-            print(f"{int(distance(self.position(), temphunterlistfortesting[j]))=}")
-        olddistance = int(distance(self.position(), positions[1]))
+            templist2.append(int(distance(self.position(), positions[j+1])))
+        tempolddistance = templist2.index(min(templist2))
+        olddistance = int(distance(self.position(), hunterlist[tempolddistance]))
         #print(olddistance)
         #print(type(olddistance))
 
@@ -149,7 +173,40 @@ class Platic_hater(turtle.Turtle):
     def rotate_hunter(self, positions):  # turtle will be turned right <degree> degrees. Use negative values for left turns.
         # Example for use of the service functions distance() and direction
         # print(f'{distance(self.position(), positions[0])=}   {direction(self.position(), positions[0])=}')  # print distance and direction from the current hunter to the prey
-        degree = -0.5  # When the turtle rotates the same amount each turn,  it will just run in a circle. Make this function smarter!
+
+
+
+
+        temp = True
+        if self.xcor() > 295 or self.xcor() < -295:
+            print("wall was hit")
+            temp = False
+            self.hunterdesideddegree = 180
+        if self.ycor() > 295 or self.ycor() < -295:
+            print("wall was hit")
+            temp = False
+            self.hunterdesideddegree = 180
+
+
+        self.distancebetween = int(distance(self.position(), positions[0]))
+
+        print(self.distancebetween)
+
+        if self.distancebetween < self.hunterolddistance and temp:
+            if self.heading() <= 180:
+                self.hunterdesideddegree = random.randint(0, 10)
+            elif self.heading() >= 180:
+                self.hunterdesideddegree = random.randint(-10, 0)
+
+        elif self.distancebetween > self.hunterolddistance and temp:
+            self.hunterdesideddegree = random.randint(-3, 3)
+
+        self.hunterolddistance = int(distance(self.position(), positions[0]))
+
+
+
+
+        degree = self.hunterdesideddegree  # When the turtle rotates the same amount each turn,  it will just run in a circle. Make this function smarter!
         self.orientation += degree
         self.orientation %= 360
         # print(self.orientation)
@@ -164,7 +221,7 @@ class Platic_hater(turtle.Turtle):
 
 
 # change these global constants only for debugging purposes:
-MAX_TURNS = 100       # Maximum number of turns in a hunt.                           In competition: probably 200.
+MAX_TURNS = 200       # Maximum number of turns in a hunt.                           In competition: probably 200.
 ROUNDS = 1            # Each player plays the prey this often.                       In competition: probably 10.
 STEP_SIZE = 3         # Distance each turtle moves in one turn.                      In competition: probably 3.
 SPEED = 0             # Fastest: 10, slowest: 1, max speed: 0.                       In competition: probably 0.
