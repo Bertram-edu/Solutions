@@ -248,11 +248,8 @@ for i in range(100):
 
 
     if type(alive_herolist[heroselector]).__name__ == "Character":
-        #print("Character")
         whichherotohit = random.randint(1, len(alive_herolist))
         whichherotohit -= 1
-        #print(f"which: {whichherotohit}")
-        #print(f"selector: {heroselector}")
         while alive_herolist[heroselector] == alive_herolist[whichherotohit]:
             whichherotohit = random.randint(1, len(alive_herolist))
             whichherotohit -= 1
