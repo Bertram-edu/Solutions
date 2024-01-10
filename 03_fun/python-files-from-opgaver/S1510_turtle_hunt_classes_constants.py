@@ -84,6 +84,8 @@ desideddegree = 0
 hunterolddistance = 0
 hunterdesideddegree = 0
 
+count = 0
+
 class Platic_hater(turtle.Turtle):
 
     def __init__(self):
@@ -93,6 +95,8 @@ class Platic_hater(turtle.Turtle):
         self.hunterdesideddegree = 0
         self.hunterolddistance = 0
         self.distancebetween = 0
+        self.hunternewdirection = 0
+        self.hunterolddirection = 0
 
     def rotate_prey(self, positions):  # turtle will be turned right <degree> degrees. Use negative values for left turns.
         # self: the turtle that shall be rotated
@@ -106,6 +110,8 @@ class Platic_hater(turtle.Turtle):
 
         #  global variables
         global olddistance
+        global olddirection
+
         global desideddegree
 
         hunterlist = [positions[1], positions[2], positions[3]]
@@ -117,12 +123,7 @@ class Platic_hater(turtle.Turtle):
             templist1.append(int(distance(self.position(), positions[i+1])))
         tempnewdistance = templist1.index(min(templist1))
         newdistance = int(distance(self.position(), hunterlist[tempnewdistance]))
-        # print(f"tempnewdistance: {tempnewdistance}")
-        # print(f"newdistance: {newdistance}")
-        # print(f"olddistance: {olddistance}")
-
-        # print(f"test: {int(distance(self.position(), hunterlist[tempnewdistance]))=}")
-        # print(self.heading())
+        newdirection = int(direction(self.position(), hunterlist[tempnewdistance]))
 
         temp = True
         if self.xcor() > 295 or self.xcor() < -295:
@@ -133,13 +134,13 @@ class Platic_hater(turtle.Turtle):
             desideddegree = 180
         if newdistance < olddistance and temp:
 
-            heading = self.heading()
-            print(heading)
+            # heading = self.heading()
+            # print(heading)
 
-            if heading >= 180:
-                desideddegree = random.randint(0, 20)
-            elif heading <= 180:
-                desideddegree = random.randint(-20, 0)
+            if newdirection < olddirection:
+                desideddegree = random.randint(0, 10)
+            elif newdirection > olddirection:
+                desideddegree = random.randint(-10, 0)
 
 
             # negitiveorpositive = True #bool(random.getrandbits(1))
@@ -150,17 +151,25 @@ class Platic_hater(turtle.Turtle):
 
 
         elif newdistance > olddistance and temp:
-            desideddegree = 0  # random.randint(-3, 3)
-        print(f"prey-degree: {desideddegree}")
-        print(self.position())
+            # desideddegree = 0  # random.randint(-3, 3)
 
-        templist2 = []
-        for j in range(3):
-            templist2.append(int(distance(self.position(), positions[j+1])))
-        tempolddistance = templist2.index(min(templist2))
-        olddistance = int(distance(self.position(), hunterlist[tempolddistance]))
-        #print(olddistance)
-        #print(type(olddistance))
+            if newdirection > olddirection:
+                desideddegree = random.randint(0, 10)
+            elif newdirection < olddirection:
+                desideddegree = random.randint(-10, 0)
+
+
+
+
+        # print(f"prey-degree: {desideddegree}")
+        # print(self.position())
+
+        #templist2 = []
+        #for j in range(3):
+        #    templist2.append(int(distance(self.position(), positions[j+1])))
+        #tempolddistance = templist2.index(min(templist2))
+        olddistance = int(distance(self.position(), hunterlist[tempnewdistance]))
+        olddirection = int(direction(self.position(), hunterlist[tempnewdistance]))
 
 
         degree = desideddegree  # When the turtle rotates the same amount each turn,  it will just run in a circle. Make this function smarter!
@@ -175,33 +184,51 @@ class Platic_hater(turtle.Turtle):
         # print(f'{distance(self.position(), positions[0])=}   {direction(self.position(), positions[0])=}')  # print distance and direction from the current hunter to the prey
 
 
+        # global count
 
+        timerstart = time.time()
 
         temp = True
-        if self.xcor() > 295 or self.xcor() < -295:
+        if self.xcor() > 295 or self.xcor() < -295:  # and (count % 2) == 0
             print("wall was hit")
             temp = False
             self.hunterdesideddegree = 180
-        if self.ycor() > 295 or self.ycor() < -295:
+        if self.ycor() > 290 or self.ycor() < -295:  # and (count % 2) == 0
             print("wall was hit")
             temp = False
             self.hunterdesideddegree = 180
+
+        # count += 1
+        # print((count % 2) == 0)
+
+        self.hunternewdirection = int(direction(self.position(), positions[0]))
+
 
 
         self.distancebetween = int(distance(self.position(), positions[0]))
 
-        print(self.distancebetween)
+        # print(f"distance: {self.distancebetween}")
 
         if self.distancebetween < self.hunterolddistance and temp:
-            if self.heading() <= 180:
+            # self.hunterdesideddegree = random.randint(-10, 10)
+
+            if self.hunternewdirection > self.hunterolddirection:
                 self.hunterdesideddegree = random.randint(0, 10)
-            elif self.heading() >= 180:
+            elif self.hunternewdirection < self.hunterolddirection:
                 self.hunterdesideddegree = random.randint(-10, 0)
 
         elif self.distancebetween > self.hunterolddistance and temp:
-            self.hunterdesideddegree = random.randint(-3, 3)
+            # self.hunterdesideddegree = 0 # random.randint(-3, 3)
+
+            if self.hunternewdirection < self.hunterolddirection:
+                self.hunterdesideddegree = random.randint(0, 10)
+            elif self.hunternewdirection > self.hunterolddirection:
+                self.hunterdesideddegree = random.randint(-10, 0)
+
 
         self.hunterolddistance = int(distance(self.position(), positions[0]))
+
+        self.hunterolddirection = int(direction(self.position(), positions[0]))
 
 
 
@@ -210,6 +237,9 @@ class Platic_hater(turtle.Turtle):
         self.orientation += degree
         self.orientation %= 360
         # print(self.orientation)
+        timerstop = time.time()
+        print(timerstart)
+        print(timerstop)
         return degree
 
 
