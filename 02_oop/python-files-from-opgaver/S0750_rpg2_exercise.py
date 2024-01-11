@@ -35,6 +35,8 @@ import random
 
 time.sleep(1)
 
+verytemplist = []
+
 
 class Character:  # can hit someone or fail and hit themselves
     def __init__(self, name, health, attackpower):
@@ -67,9 +69,10 @@ class Character:  # can hit someone or fail and hit themselves
             print()
             print(f"{self.name} is dead and cannot do this")
             print()
+            verytemplist.append(turn)
 
     def death_check(self):
-        return self._current_health >= 0
+        return self._current_health > 0
 
     def get_hit(self, attackpower):
         self._current_health -= attackpower
@@ -220,21 +223,7 @@ class Warrior(Character):  # Warrior has light attack and heavy attack light att
             print(f"{self.name} is dead and cannot do this")
             print()
 
-
-hero1 = Character("Bozeto", 100, 20)
-hero2 = Character("Andananda", 110, 24)
-hero3 = Healer("DoctorX", 75, 20)
-hero4 = Wizard("wise old man", 73, 20)
-hero5 = Warrior("Firestorm", 80, 20)
-
-herolist = [hero1, hero2, hero3, hero4, hero5]
-alive_herolist = []
-dead_herolist = []
-
-templist = []
-
-
-for i in range(100):
+def deathandalivelists():
     alive_herolist.clear()
     dead_herolist.clear()
     for j in range(len(herolist)):
@@ -243,27 +232,66 @@ for i in range(100):
         else:
             dead_herolist.append(herolist[j])
 
+def whitchherotoselect(heroselector):
+    whichherotohit = random.randint(1, len(alive_herolist))
+    whichherotohit -= 1
+    while heroselector == whichherotohit and len(alive_herolist) > 1:
+        whichherotohit = random.randint(1, len(alive_herolist))
+        whichherotohit -= 1
+    return whichherotohit
+
+
+
+
+hero1 = Character("Bozeto", 100, 20)
+hero2 = Character("Andananda", 110, 24)
+hero3 = Healer("DoctorX", 75, 20)
+hero4 = Wizard("wise old man", 70, 20)
+hero5 = Warrior("Firestorm", 80, 20)
+
+herolist = [hero1, hero2, hero3, hero4, hero5]
+alive_herolist = []
+dead_herolist = []
+
+templist = []
+temp = True
+turn = 0
+while turn <= 100 and len(alive_herolist) > 1 or temp:
+    deathandalivelists()
+
     heroselector = random.randint(1, len(alive_herolist))
     heroselector -= 1
 
 
     if type(alive_herolist[heroselector]).__name__ == "Character":
-        whichherotohit = random.randint(1, len(alive_herolist))
-        whichherotohit -= 1
-        while alive_herolist[heroselector] == alive_herolist[whichherotohit]:
-            whichherotohit = random.randint(1, len(alive_herolist))
-            whichherotohit -= 1
+        whichherotohit = whitchherotoselect(heroselector)
+        alive_herolist[heroselector].hit(herolist[whichherotohit])
 
-        herolist[heroselector].hit(herolist[whichherotohit])
 
     elif type(alive_herolist[heroselector]).__name__ == "Healer":
-        print("Healer")
+        whichherotoheal = whitchherotoselect(heroselector)
+        alive_herolist[heroselector].heal(alive_herolist[whichherotoheal])
+
     elif type(alive_herolist[heroselector]).__name__ == "Wizard":
-        print("Wizard")
+        whichherotospellcast = whitchherotoselect(heroselector)
+        alive_herolist[heroselector].spell(alive_herolist[whichherotospellcast])
+
     elif type(alive_herolist[heroselector]).__name__ == "Warrior":
-        print("Warrior")
+        whichheroto_light_hit_or_heavy_hit = whitchherotoselect(heroselector)
+        heroattackselector = random.randint(1, 2)
+        if heroattackselector == 1:
+            alive_herolist[heroselector].light_attack(herolist[whichheroto_light_hit_or_heavy_hit])
+        elif heroattackselector == 2:
+             alive_herolist[heroselector].heavy_attack(herolist[whichheroto_light_hit_or_heavy_hit])
+        else:
+             print("something went wrong")
 
 
+    print(f"turn: {turn}")
+    turn += 1
+    temp = False
+
+# print(f"times ran line 72: {len(verytemplist)} \nfull list: {verytemplist}")
 
 
 
