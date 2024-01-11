@@ -35,7 +35,6 @@ import random
 
 time.sleep(1)
 
-verytemplist = []
 
 
 class Character:  # can hit someone or fail and hit themselves
