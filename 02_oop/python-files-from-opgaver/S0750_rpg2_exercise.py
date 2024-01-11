@@ -69,7 +69,6 @@ class Character:  # can hit someone or fail and hit themselves
             print()
             print(f"{self.name} is dead and cannot do this")
             print()
-            verytemplist.append(turn)
 
     def death_check(self):
         return self._current_health > 0
@@ -291,7 +290,7 @@ while turn <= 100 and len(alive_herolist) > 1 or temp:
     turn += 1
     temp = False
 
-# print(f"times ran line 72: {len(verytemplist)} \nfull list: {verytemplist}")
+
 
 
 
