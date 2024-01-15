@@ -33,7 +33,10 @@ Fortsæt derefter med den næste fil."""
 import time
 import random
 
+
+
 time.sleep(1)
+
 
 
 
@@ -54,16 +57,19 @@ class Character:  # can hit someone or fail and hit themselves
                 print()
                 print(f"{self.name} has hit {other.name} dealing {self.attackpower} damage")
                 print()
+                actionloglist.append(f"{turn}: {self.name} hit {other.name}")
                 other.get_hit(self.attackpower)
             elif dice_roll == 19:
                 print()
                 print(f"{self.name} tried to hit {other.name} in the face but missed hitting themself in the face dealing {self.attackpower} damage to themself {self.name} now has {self._current_health - self.attackpower} health")
                 print()
+                actionloglist.append(f"{turn}: {self.name} missed {other.name} hitting themself")
                 self.get_hit(self.attackpower)
             else:
                 print()
                 print(f"{self.name} failed to hit {other.name}")
                 print()
+                actionloglist.append(f"{turn}: {self.name} failed to hit {other.name}")
         else:
             print()
             print(f"{self.name} is dead and cannot do this")
@@ -119,16 +125,19 @@ class Healer(Character): # Healer can try to heal someone but has the chance to 
                 print()
                 print(f"{self.name} has healed {other.name} with a healpower of {self.healpower} {other.name} now has {other._current_health + self.healpower} health")
                 print()
+                actionloglist.append(f"{turn}: {self.name} healed {other.name}")
                 other.get_healed(self.healpower)
             elif dice_roll == 8:
                 print()
                 print(f"{self.name} has failed so badly to heal {other.name} that they dealt {self.healpower} damage making {other.name} now have {other._current_health - self.healpower} health")
                 print()
+                actionloglist.append(f"{turn}: {self.name} failed to heal and hurt {other.name}")
                 other.failed_healed(self.healpower)
             else:
                 print()
                 print(f"{self.name} has failed to heal {other.name}")
                 print()
+                actionloglist.append(f"{turn}: {self.name} failed to heal {other.name}")
         else:
             print()
             print(f"{self.name} is dead and cannot do this")
@@ -152,16 +161,19 @@ class Wizard(Character):  # Wizard can cast spells dealing the attackpower defin
                 print()
                 print(f"{self.name} has used spell on {other.name} with a magic power of {self.magicpower} {other.name} now has {other._current_health - self.magicpower} health")
                 print()
+                actionloglist.append(f"{turn}: {self.name} casted a spell on {other.name}")
                 other.get_spellcasted(self.magicpower)
             elif dice_roll == 9:
                 print()
                 print(f"{self.name} has missed {other.name} and hit themself dealing {self.magicpower} damage to themself their new health is {self._current_health - self.magicpower}")
                 print()
+                actionloglist.append(f"{turn}: {self.name} missed {other.name} hitting themself")
                 self.get_spellcasted(self.magicpower)
             else:
                 print()
                 print(f"{self.name} has failed to use spell on {other.name}")
                 print()
+                actionloglist.append(f"{turn}: {self.name} failed to cast spell on {other.name}")
         else:
             print()
             print(f"{self.name} is dead and cannot do this")
@@ -184,15 +196,19 @@ class Warrior(Character):  # Warrior has light attack and heavy attack light att
                 print()
                 print(f"{self.name} has used light attack dealing {self.attackpower} damage to {other.name} {other.name} now has {other._current_health - self.attackpower} health")
                 print()
+                actionloglist.append(f"{turn}: {self.name} used light attack on {other.name}")
                 other.get_light_hit(self.attackpower)
             elif dice_roll == 8:
                 print()
                 print(f"{self.name} hit {other.name} so hard they dealt double damage of {self.attackpower * 2} {other.name} now has {other._current_health - (self.attackpower * 2) } health")
                 print()
+                actionloglist.append(f"{turn}: {self.name} did double damage with light attack on {other.name}")
+                other.get_light_hit(int(self.attackpower * 2))
             else:
                 print()
                 print(f"{self.name} failed to hit {other.name} with light attack")
                 print()
+                actionloglist.append(f"{turn}: {self.name} failed to light attack {other.name}")
         else:
             print()
             print(f"{self.name} is dead and cannot do this")
@@ -206,16 +222,19 @@ class Warrior(Character):  # Warrior has light attack and heavy attack light att
                 print()
                 print(f"{self.name} has used heavy attack dealing {heavy_attackpower} damage to {other.name} {other.name} now has {other._current_health - heavy_attackpower} health")
                 print()
+                actionloglist.append(f"{turn}: {self.name} used heavy attack on {other.name}")
                 other.get_heavy_hit(heavy_attackpower)
             elif dice_roll == 7:
                 print()
                 print(f"{self.name} has missed {other.name} hitting themself in the foot {self.name} now has {self._current_health - int(self.attackpower / 2)} health")
                 print()
+                actionloglist.append(f"{turn}: {self.name} missed {other.name} hitting themself")
                 self.heavy_miss(int(self.attackpower / 2))
             else:
                 print()
                 print(f"{self.name} has failed to hit {other.name} with heavy attack")
                 print()
+                actionloglist.append(f"{turn}: {self.name} failed to use heavy attack on {other.name}")
         else:
             print()
             print(f"{self.name} is dead and cannot do this")
@@ -242,14 +261,16 @@ def whitchherotoselect(heroselector):
 
 
 hero1 = Character("Bozeto", 100, 20)
-hero2 = Character("Andananda", 110, 24)
-hero3 = Healer("DoctorX", 75, 20)
-hero4 = Wizard("wise old man", 70, 20)
-hero5 = Warrior("Firestorm", 80, 20)
+hero2 = Character("Andananda", 110, 10)
+hero3 = Healer("DoctorX", 75, 80)
+hero4 = Wizard("wise old man", 70, 5)
+hero5 = Warrior("Firestorm", 80, 5)
 
 herolist = [hero1, hero2, hero3, hero4, hero5]
 alive_herolist = []
 dead_herolist = []
+
+actionloglist = []
 
 templist = []
 temp = True
@@ -261,20 +282,20 @@ while turn <= 100 and len(alive_herolist) > 1 or temp:
     heroselector -= 1
 
 
-    if type(alive_herolist[heroselector]).__name__ == "Character":
+    if type(alive_herolist[heroselector]) == Character:
         whichherotohit = whitchherotoselect(heroselector)
         alive_herolist[heroselector].hit(herolist[whichherotohit])
 
 
-    elif type(alive_herolist[heroselector]).__name__ == "Healer":
+    elif type(alive_herolist[heroselector]) == Healer:
         whichherotoheal = whitchherotoselect(heroselector)
         alive_herolist[heroselector].heal(alive_herolist[whichherotoheal])
 
-    elif type(alive_herolist[heroselector]).__name__ == "Wizard":
+    elif type(alive_herolist[heroselector]) == Wizard:
         whichherotospellcast = whitchherotoselect(heroselector)
         alive_herolist[heroselector].spell(alive_herolist[whichherotospellcast])
 
-    elif type(alive_herolist[heroselector]).__name__ == "Warrior":
+    elif type(alive_herolist[heroselector]) == Warrior:
         whichheroto_light_hit_or_heavy_hit = whitchherotoselect(heroselector)
         heroattackselector = random.randint(1, 2)
         if heroattackselector == 1:
@@ -293,67 +314,17 @@ while turn <= 100 and len(alive_herolist) > 1 or temp:
 
 
 
-
-
-
-# print(f"alive: {alive_herolist}")
-# print(f"dead: {dead_herolist}")
-
-
-
-
-
-# for i in range(100):
-#     heroselector = random.randint(1, 5)
-#     if heroselector == 1:
-#         print(f"hero {heroselector}: \n")
-#         whichherotohit = random.randint(1, 4)
-#         hero1.hit(herolist[whichherotohit])
-#
-#     elif heroselector == 2:
-#
-#         print(f"hero {heroselector}: \n")
-#         temp = True
-#         while temp is True or whichherotohit == 2:
-#             temp = False
-#             whichherotohit = random.randint(0, 4)
-#         hero2.hit(herolist[whichherotohit])
-#
-#     elif heroselector == 3:
-#
-#         print(f"hero {heroselector}: \n")
-#         whichherotohit = random.randint(0, 4)
-#         hero3.heal(herolist[whichherotohit])
-#
-#     elif heroselector == 4:
-#
-#         print(f"hero {heroselector}: \n")
-#         temp = True
-#         while temp is True or whichherotohit == 3:
-#             temp = False
-#             whichherotohit = random.randint(1, 4)
-#         hero4.spell(herolist[whichherotohit])
-#
-#     elif heroselector == 5:
-#
-#         print(f"hero {heroselector}: \n")
-#         temp = True
-#         while temp is True or whichherotohit == 4:
-#             temp = False
-#             whichherotohit = random.randint(1, 4)
-#
-#         heroattackselector = random.randint(1, 2)
-#         if heroattackselector == 1:
-#             hero5.light_attack(herolist[whichherotohit])
-#         elif heroattackselector == 2:
-#             hero5.heavy_attack(herolist[whichherotohit])
-#         else:
-#             print("something went wrong")
-
 for i in range(3):
     print()
 
+
+
+
 print("\nconclusion: \n")
+
+print(f"\namount of actions: {len(actionloglist)}\n\nall actions: {actionloglist}\n")
+
+print(f"final turn: {turn - 1}\n")
 
 print("alive:")
 for i in alive_herolist:
@@ -363,16 +334,6 @@ print("dead: ")
 for i in dead_herolist:
     print(f"{i.name} is dead")
 
-
-
-
-#for i in range(len(herolist)):
-#    if not herolist[i].death_check():
-#        print(f"{herolist[i].name} is dead")
-#    elif herolist[i].death_check():
-#        print(f"{herolist[i].name} is alive")
-#    else:
-#        print("something went wrong")
 
 for i in range(3):
     print()
