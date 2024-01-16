@@ -184,9 +184,6 @@ class Platic_hater(turtle.Turtle):
         # print(f'{distance(self.position(), positions[0])=}   {direction(self.position(), positions[0])=}')  # print distance and direction from the current hunter to the prey
 
 
-        # global count
-
-        timerstart = time.time()
 
         temp = True
         if self.xcor() > 295 or self.xcor() < -295:  # and (count % 2) == 0
@@ -219,11 +216,28 @@ class Platic_hater(turtle.Turtle):
 
         elif self.distancebetween > self.hunterolddistance and temp:
             # self.hunterdesideddegree = 0 # random.randint(-3, 3)
+            if self.heading() <= 180:
+                self.hunterdesideddegree = random.randint(0, 15)
 
-            if self.hunternewdirection < self.hunterolddirection:
-                self.hunterdesideddegree = random.randint(0, 10)
-            elif self.hunternewdirection > self.hunterolddirection:
-                self.hunterdesideddegree = random.randint(-10, 0)
+            elif self.heading() >= 180:
+                self.hunterdesideddegree = random.randint(-15, 0)
+
+
+
+#           if self.hunternewdirection < self.hunterolddirection:
+#               if self.heading() <= 180:
+#                   self.hunterdesideddegree = random.randint(0, 15)
+
+#               elif self.heading() >= 180:
+#                   self.hunterdesideddegree = random.randint(-15, 0)
+
+#           elif self.hunternewdirection > self.hunterolddirection:
+
+#               if self.heading() <= 180:
+#                   self.hunterdesideddegree = random.randint(0, 10)
+
+#               elif self.heading() >= 180:
+#                   self.hunterdesideddegree = random.randint(-10, 0)
 
 
         self.hunterolddistance = int(distance(self.position(), positions[0]))
@@ -236,10 +250,6 @@ class Platic_hater(turtle.Turtle):
         degree = self.hunterdesideddegree  # When the turtle rotates the same amount each turn,  it will just run in a circle. Make this function smarter!
         self.orientation += degree
         self.orientation %= 360
-        # print(self.orientation)
-        timerstop = time.time()
-        print(timerstart)
-        print(timerstop)
         return degree
 
 
