@@ -252,7 +252,7 @@ def deathandalivelists():
 def whitchherotoselect(heroselector):
     whichherotohit = random.randint(1, len(alive_herolist))
     whichherotohit -= 1
-    while heroselector == whichherotohit and len(alive_herolist) > 1:
+    while alive_herolist[heroselector] == alive_herolist[whichherotohit] and len(alive_herolist) > 1:
         whichherotohit = random.randint(1, len(alive_herolist))
         whichherotohit -= 1
     return whichherotohit
@@ -262,9 +262,9 @@ def whitchherotoselect(heroselector):
 
 hero1 = Character("Bozeto", 100, 20)
 hero2 = Character("Andananda", 110, 10)
-hero3 = Healer("DoctorX", 75, 80)
+hero3 = Healer("DoctorX", 120, 80)
 hero4 = Wizard("wise old man", 70, 5)
-hero5 = Warrior("Firestorm", 80, 5)
+hero5 = Warrior("Firestorm", 50, 5)
 
 herolist = [hero1, hero2, hero3, hero4, hero5]
 alive_herolist = []
