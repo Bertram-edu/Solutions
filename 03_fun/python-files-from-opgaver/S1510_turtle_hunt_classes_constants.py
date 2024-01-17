@@ -258,7 +258,30 @@ class Platic_hater(turtle.Turtle):
 #
 #
 #
+class Uli_1(turtle.Turtle):
 
+    def __init__(self):
+        super().__init__()  # Here, this is equivalent to turtle.Turtle.__init__(self)
+        self.orientation = 0  # used to keep track of the turtle's current orientation (the direction it is heading)
+
+    def rotate_prey(self, positions):  # turtle will be turned right <degree> degrees. Use negative values for left turns.
+        hunter_distance = 99999
+        for hunter in [1, 2, 3]:
+            if distance(positions[0], positions[hunter]) < hunter_distance:
+                hunter_distance = distance(positions[0], positions[hunter])
+                closest_hunter = hunter
+        new_prey_direction = direction(positions[closest_hunter], positions[0])  # direction from closest hunter to prey
+        degree = new_prey_direction - self.orientation
+        self.orientation += degree
+        self.orientation %= 360
+        return degree
+
+    def rotate_hunter(self, positions):  # turtle will be turned right <degree> degrees. Use negative values for left turns.
+        prey_direction = direction(self.position(), positions[0])  # direction from current hunter to prey
+        degree = prey_direction - self.orientation
+        self.orientation += degree
+        self.orientation %= 360
+        return degree
 
 # change these global constants only for debugging purposes:
 MAX_TURNS = 200       # Maximum number of turns in a hunt.                           In competition: probably 200.
@@ -272,4 +295,4 @@ random.seed(2)  # use seed() if you want reproducible random numbers for debuggi
 
 
 class1 = Platic_hater  # (red prey) Replace PlayerName1 by your own class name here.
-class2 = Platic_hater  # (green prey) For testing your code, replace PlayerName1 by your own class name here. Later replace this by your sparring partner's class name.
+class2 = Uli_1  # (green prey) For testing your code, replace PlayerName1 by your own class name here. Later replace this by your sparring partner's class name.

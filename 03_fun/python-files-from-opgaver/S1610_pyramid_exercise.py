@@ -33,3 +33,40 @@ Når dit program er færdigt, skal du skubbe det til dit github-repository.
 Send derefter denne Teams-meddelelse til din lærer: <filename> færdig
 Fortsæt derefter med den næste fil."""
 
+import time
+
+time.sleep(1)
+
+
+
+def is_prime(num):
+    if num < 2:
+        return False
+    for i in range(2, int(num**0.5) + 1):
+        if num % i == 0:
+            return False
+    return True
+
+
+def pyramid(lines):
+    numbers = [3, 1]
+
+    for line in range(lines):
+        line += 1
+        for num in numbers:
+            if not is_prime(num):
+                print(f"{num} is not prime")
+            else:
+                print(f"{num} is prime")
+
+
+
+
+
+def pyramid2(lines, firstline):
+    0
+
+linelist = []
+
+pyramid(7)  # the calls for 2...10 are still missing
+pyramid2(7, [1, 0, 1, 2])

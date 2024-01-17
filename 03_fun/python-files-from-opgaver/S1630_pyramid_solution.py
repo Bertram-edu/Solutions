@@ -6,7 +6,7 @@ køre/debugge programmet.
 
 Send derefter denne Teams-meddelelse til din lærer: <filename> færdig
 Fortsæt derefter med den næste fil."""
-
+import time
 
 
 def pyramid2(lines, firstline):
@@ -76,4 +76,7 @@ def pyramid2c(lines, firstline):
 
 firstline_input = input("Enter the first row of the pyramid. (Separate the individual numbers with spaces.): ")
 lines_input = int(input("Enter the number of rows to print: "))
+
+time.sleep(1)
+
 pyramid2(lines_input, firstline_input)
