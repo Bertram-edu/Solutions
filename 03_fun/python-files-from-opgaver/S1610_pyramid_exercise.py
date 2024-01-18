@@ -32,7 +32,7 @@ Hvis du ikke aner, hvordan du skal begynde, kan du åbne S1620_pyramid_help.py o
 Når dit program er færdigt, skal du skubbe det til dit github-repository.
 Send derefter denne Teams-meddelelse til din lærer: <filename> færdig
 Fortsæt derefter med den næste fil."""
-
+import random
 import time
 
 time.sleep(1)
@@ -49,15 +49,13 @@ def is_prime(num):
 
 
 def pyramid(lines):
-    numbers = [3, 1]
-
-    for line in range(lines):
-        line += 1
-        for num in numbers:
-            if not is_prime(num):
-                print(f"{num} is not prime")
-            else:
-                print(f"{num} is prime")
+    numbers = [1, 1]
+    for i in range(1000):
+        temp = int(input(":")) #random.randint(1, 1000)
+        if temp % 2 == 0:
+            print(f"{temp} is prime")
+        else:
+            print(f"{temp} is not prime")
 
 
 
