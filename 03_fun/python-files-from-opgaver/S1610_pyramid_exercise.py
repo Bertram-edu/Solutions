@@ -32,39 +32,38 @@ Hvis du ikke aner, hvordan du skal begynde, kan du åbne S1620_pyramid_help.py o
 Når dit program er færdigt, skal du skubbe det til dit github-repository.
 Send derefter denne Teams-meddelelse til din lærer: <filename> færdig
 Fortsæt derefter med den næste fil."""
-import random
 import time
 
 time.sleep(1)
 
 
-
-def is_prime(num):
-    if num < 2:
-        return False
-    for i in range(2, int(num**0.5) + 1):
-        if num % i == 0:
-            return False
-    return True
-
-
 def pyramid(lines):
     numbers = [1, 1]
-    for i in range(1000):
-        temp = int(input(":")) #random.randint(1, 1000)
-        if temp % 2 == 0:
-            print(f"{temp} is prime")
-        else:
-            print(f"{temp} is not prime")
-
-
-
+    numbers_lists = [numbers]
+    for line in range(lines):
+        numbers_lists.append(numbers_lists[line].copy())
+        print(f"row {str(line + 1)}: {numbers_lists[line]}")
+        move_index = 0
+        for num in range(len(numbers_lists[line]) - 1):
+            if numbers_lists[line][num] + numbers_lists[line][num + 1] == line + 2:
+                numbers_lists[line + 1].insert(num + move_index + 1, line + 2)
+                move_index += 1
 
 
 def pyramid2(lines, firstline):
-    0
+    numbers_lists = [firstline]
+    for line in range(lines):
+        numbers_lists.append(numbers_lists[line].copy())
+        print(f"row {str(line + 1)}: {numbers_lists[line]}")
+        move_index = 0
+        for num in range(len(numbers_lists[line]) - 1):
+            if numbers_lists[line][num] + numbers_lists[line][num + 1] == line + 2:
+                numbers_lists[line + 1].insert(num + move_index + 1, line + 2)
+                move_index += 1
+
 
 linelist = []
 
 pyramid(7)  # the calls for 2...10 are still missing
+print()
 pyramid2(7, [1, 0, 1, 2])
