@@ -27,25 +27,57 @@ for i in range(4):
     randomnumber = random.randint(1, 9)
     guess_this_list.append(randomnumber)
 
-temp = True
 
-while temp:
-    while True:
-        try:
-            number = int(input("guess the number: "))
-            break
-        except:
-            print("not a number")
-    if number > 9 or number < 1:
-        print(f"{number} is not in range of 1 to 9\nplease enter new number")
-        temp = True
+for i in range(len(guess_this_list)):
+    temp = True
+    while temp:
+       while True:
+           try:
+               number = int(input("guess the number: "))
+               break
+           except:
+               print("not a number")
+
+       if number > 9 or number < 1:
+           print(f"{number} is not in range of 1 to 9\nplease enter new number")
+           temp = True
+
+       else:
+           temp = False
+
+    if number in guess_this_list and number == guess_this_list[i]:
+        print("correct number and position")
+
+    elif number in guess_this_list:
+        print("number is in list")
+
     else:
-        temp = False
+        print(f"\n:-:\nno...")
 
 
-if number in guess_this_list:
-    print(f"{number} is in {guess_this_list}")
-else:
-    print(f"{number} is not in {guess_this_list}")
+
+
+
+
+#temp = True
+#
+#while temp:
+#    while True:
+#        try:
+#            number = int(input("guess the number: "))
+#            break
+#        except:
+#            print("not a number")
+#    if number > 9 or number < 1:
+#        print(f"{number} is not in range of 1 to 9\nplease enter new number")
+#        temp = True
+#    else:
+#        temp = False
+#
+#
+#if number in guess_this_list:
+#    print(f"{number} is in {guess_this_list}")
+#else:
+#    print(f"{number} is not in {guess_this_list}")
 
 
