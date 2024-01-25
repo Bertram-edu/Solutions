@@ -21,63 +21,70 @@ Fortsæt derefter med den næste fil."""
 import time
 import random
 
+time.sleep(1)
+
 guess_this_list = []
+numberlist = []
+correctnumberlist = []
+
+blackcoin = 0
+whitecoin = 0
 
 for i in range(4):
     randomnumber = random.randint(1, 9)
+    while randomnumber in guess_this_list and len(guess_this_list) >= 1:
+        randomnumber = random.randint(1, 9)
     guess_this_list.append(randomnumber)
 
 
-for i in range(len(guess_this_list)):
-    temp = True
-    while temp:
-       while True:
-           try:
-               number = int(input("guess the number: "))
-               break
-           except:
-               print("not a number")
+while numberlist != guess_this_list:
+    correctnumberlist.clear()
+    numberlist.clear()
+    for j in range(2):
+        print()
+    print(f"")
+    for i in range(len(guess_this_list)):
+        temp = True
+        while temp:
+           while True:
+               try:
+                   number = int(input("guess the number: "))
+                   numberlist.append(number)
 
-       if number > 9 or number < 1:
-           print(f"{number} is not in range of 1 to 9\nplease enter new number")
-           temp = True
+                   break
+               except:
+                   print("not a number")
 
-       else:
-           temp = False
+           if number > 9 or number < 1:
+               print(f"{number} is not in range of 1 to 9\nplease enter new number")
+               temp = True
 
-    if number in guess_this_list and number == guess_this_list[i]:
-        print("correct number and position")
+           else:
+               temp = False
 
-    elif number in guess_this_list:
-        print("number is in list")
+        if number in guess_this_list and number == guess_this_list[i]:
+            print(f"{number} is correct number and position")
+            correctnumberlist.append(number)
+            blackcoin += 1
 
-    else:
-        print(f"\n:-:\nno...")
+        elif number in guess_this_list:
+            print(f"{number} is in list but not at that position")
+            correctnumberlist.append(number)
+            whitecoin += 1
+
+        else:
+            print(f"{number} is not in list")
+
+        for index, k in zip(range(len(correctnumberlist)), correctnumberlist):
+            if correctnumberlist.count(k) > 1:
+                correctnumberlist.pop(index)
+    print(f"every number you got correct not in the correct order{correctnumberlist}")
+
+print(f"\nthe list: {guess_this_list} your guess: {numberlist}\n")
+print(f"you got {blackcoin} blackcoins and {whitecoin} whitecoins")
 
 
 
 
-
-
-#temp = True
-#
-#while temp:
-#    while True:
-#        try:
-#            number = int(input("guess the number: "))
-#            break
-#        except:
-#            print("not a number")
-#    if number > 9 or number < 1:
-#        print(f"{number} is not in range of 1 to 9\nplease enter new number")
-#        temp = True
-#    else:
-#        temp = False
-#
-#
-#if number in guess_this_list:
-#    print(f"{number} is in {guess_this_list}")
-#else:
-#    print(f"{number} is not in {guess_this_list}")
 
 
