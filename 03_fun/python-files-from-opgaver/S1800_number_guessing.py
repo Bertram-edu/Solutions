@@ -27,8 +27,8 @@ guess_this_list = []
 numberlist = []
 correctnumberlist = []
 
-blackcoin = 0
-whitecoin = 0
+#blackcoin = 0
+#whitecoin = 0
 
 for i in range(4):
     randomnumber = random.randint(1, 9)
@@ -36,55 +36,76 @@ for i in range(4):
         randomnumber = random.randint(1, 9)
     guess_this_list.append(randomnumber)
 
+guess_this_list.clear()
+guess_this_list = [1, 1, 1, 1]
 
-while numberlist != guess_this_list:
-    correctnumberlist.clear()
+temp = 0
+
+
+# new way without having to type each number individually
+while numberlist != guess_this_list and temp < 9999:
+    number = "0"
     numberlist.clear()
-    for j in range(2):
-        print()
-    print(f"")
-    for i in range(len(guess_this_list)):
-        temp = True
-        while temp:
-           while True:
-               try:
-                   number = int(input("guess the number: "))
-                   numberlist.append(number)
-
-                   break
-               except:
-                   print("not a number")
-
-           if number > 9 or number < 1:
-               print(f"{number} is not in range of 1 to 9\nplease enter new number")
-               temp = True
-
-           else:
-               temp = False
-
-        if number in guess_this_list and number == guess_this_list[i]:
-            print(f"{number} is correct number and position")
-            correctnumberlist.append(number)
-            blackcoin += 1
-
-        elif number in guess_this_list:
-            print(f"{number} is in list but not at that position")
-            correctnumberlist.append(number)
-            whitecoin += 1
-
-        else:
-            print(f"{number} is not in list")
-
-        for index, k in zip(range(len(correctnumberlist)), correctnumberlist):
-            if correctnumberlist.count(k) > 1:
-                correctnumberlist.pop(index)
-    print(f"every number you got correct not in the correct order{correctnumberlist}")
-
-print(f"\nthe list: {guess_this_list} your guess: {numberlist}\n")
-print(f"you got {blackcoin} blackcoins and {whitecoin} whitecoins")
+    while len(str(number)) != 4:
+        number = int(input("testing chose da number: "))
+        if len(str(number)) != 4:
+            print(f"{number} is not four numbers long\n")
+    for i in str(number):
+        numberlist.append(int(i))
+    print(numberlist)
+print(temp)
 
 
+# works but you have to put each number individually
+
+# attempts = 1
+#
+# while numberlist != guess_this_list:
+#     whitecoin = 0
+#     blackcoin = 0
+#     correctnumberlist.clear()
+#     numberlist.clear()
+#     for j in range(2):
+#         print()
+#     print(f"attempt: {attempts}")
+#     for i in range(len(guess_this_list)):
+#         temp = True
+#         while temp:
+#            while True:
+#                try:
+#                    number = int(input("guess the number: "))
+#                    numberlist.append(number)
+#                    break
+#                except:
+#                    print("not a number")
+#
+#            if number > 9 or number < 1:
+#                print(f"{number} is not in range of 1 to 9\nplease enter new number")
+#                temp = True
+#
+#            else:
+#                temp = False
+#
+#         if number in guess_this_list and number == guess_this_list[i]:
+#             print(f"{number} is correct number and position")
+#             correctnumberlist.append(number)
+#             blackcoin += 1
+#
+#         elif number in guess_this_list:
+#             print(f"{number} is in list but not at that position")
+#             correctnumberlist.append(number)
+#             whitecoin += 1
+#
+#         else:
+#             print(f"{number} is not in list")
+#
+#         for index, k in zip(range(len(correctnumberlist)), correctnumberlist):
+#             if correctnumberlist.count(k) > 1:
+#                 correctnumberlist.pop(index)
+#     print(f"every number you got correct not in the correct order{correctnumberlist}")
+#     print(f"\nattempt: {attempts} was worth {blackcoin} blackcoins and {whitecoin} whitecoins")
+#     attempts += 1
 
 
-
-
+# print(f"\nyou got it right in: {attempts-1} attempts\n")
+# print(f"\nthe list: {guess_this_list} your guess: {numberlist}\n")
