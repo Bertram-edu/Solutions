@@ -38,10 +38,10 @@ for i in range(4):
 
 
 # for option 1:
-print(f"\nsome info on the game:\ninfo 1: the goal of the game is to guess the correct 4 digit number combination that is chosen at random in the least amount of guesses\ninfo 2: when you get a number that is in the list but not at the exact position you will get a whitecoin\ninfo 3: when you get a number that is in the list and is at the correct position you will get a blackcoin\ninfo 4: each attempt you will get to see what the current guess/attempt is worth\ninfo 5: when you've guessed the correct number you will get to see how many attempts it took\n\nthe rules are:\nrule 1: when chosing the number the number has to be 4 numbers without any spaces\n")
+print("\nsome info on the game:\ninfo 1: the goal of the game is to guess the correct 4 digit number combination that is chosen at random in the least amount of guesses\ninfo 2: when you get a number that is in the list but not at the exact position you will get a whitecoin\ninfo 3: when you get a number that is in the list and is at the correct position you will get a blackcoin\ninfo 4: each attempt you will get to see what the current guess/attempt is worth\ninfo 5: when you've guessed the correct number you will get to see how many attempts it took\n\nthe rules are:\nrule 1: when chosing the number the number has to be 4 numbers without any spaces\n")
 
 # for option 2:
-# print(f"\nsome info on the game:\ninfo 1: the goal of the game is to guess the correct 4 digit number combination that is chosen at random in the least amount of guesses\ninfo 2: when you get a number that is in the list but not at the exact position you will get a whitecoin\ninfo 3: when you get a number that is in the list and is at the correct position you will get a blackcoin\ninfo 4: each attempt you will get to see what the current guess/attempt is worth\ninfo 5: when you've guessed the correct number you will get to see how many attempts it took\n\nthe rules are:\nrule 1: when chosing the number you will have to put in each number individually for a 4 number sequence\n")
+# print("\nsome info on the game:\ninfo 1: the goal of the game is to guess the correct 4 digit number combination that is chosen at random in the least amount of guesses\ninfo 2: when you get a number that is in the list but not at the exact position you will get a whitecoin\ninfo 3: when you get a number that is in the list and is at the correct position you will get a blackcoin\ninfo 4: each attempt you will get to see what the current guess/attempt is worth\ninfo 5: when you've guessed the correct number you will get to see how many attempts it took\n\nthe rules are:\nrule 1: when chosing the number you will have to put in each number individually for a 4 number sequence\n")
 
 
 attempts = 1
@@ -53,12 +53,12 @@ while numberlist != guess_this_list:
     correctnumberlist.clear()
     blackcoin = 0
     whitecoin = 0
-    while len(str(number)) != 4:
+    while len(str(number)) != 4 or "0" in str(number):
         try:
             number = int(input("guess the number: "))
             if len(str(number)) != 4:
                 print(f"{number} is not four numbers long\n")
-        except:
+        except ValueError:
             print("numbers only")
     for i in str(number):
         numberlist.append(int(i))
@@ -78,7 +78,7 @@ while numberlist != guess_this_list:
         if correctnumberlist.count(k) > 1:
             correctnumberlist.pop(index)
 
-    print(f"every number you got correct not in the correct order{correctnumberlist}")
+    print(f"every number you got correct not in the correct order {correctnumberlist}")
     print(f"\nattempt: {attempts} was worth {blackcoin} blackcoins and {whitecoin} whitecoins")
     attempts += 1
 
@@ -131,7 +131,7 @@ print(f"\nthe list: {guess_this_list} your guess: {numberlist}\n")
 #         for index, k in zip(range(len(correctnumberlist)), correctnumberlist):
 #             if correctnumberlist.count(k) > 1:
 #                 correctnumberlist.pop(index)
-#     print(f"every number you got correct not in the correct order{correctnumberlist}")
+#     print(f"every number you got correct not in the correct order {correctnumberlist}")
 #     print(f"\nattempt: {attempts} was worth {blackcoin} blackcoins and {whitecoin} whitecoins")
 #     attempts += 1
 
