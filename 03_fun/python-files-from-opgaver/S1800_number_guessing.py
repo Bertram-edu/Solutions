@@ -43,6 +43,8 @@ print("\nsome info on the game:\ninfo 1: the goal of the game is to guess the co
 # for option 2:
 # print("\nsome info on the game:\ninfo 1: the goal of the game is to guess the correct 4 digit number combination that is chosen at random in the least amount of guesses\ninfo 2: when you get a number that is in the list but not at the exact position you will get a whitecoin\ninfo 3: when you get a number that is in the list and is at the correct position you will get a blackcoin\ninfo 4: each attempt you will get to see what the current guess/attempt is worth\ninfo 5: when you've guessed the correct number you will get to see how many attempts it took\n\nthe rules are:\nrule 1: when chosing the number you will have to put in each number individually for a 4 number sequence\n")
 
+#input("press enter to continue: ")
+#print("\n\n")
 
 attempts = 1
 
@@ -58,11 +60,13 @@ while numberlist != guess_this_list:
             number = int(input("guess the number: "))
             if len(str(number)) != 4:
                 print(f"{number} is not four numbers long\n")
+            if "0" in str(number):
+                print(f"{number} cannot have any zeros")
         except ValueError:
             print("numbers only")
     for i in str(number):
         numberlist.append(int(i))
-    print(numberlist)
+    print(f"your guess: {numberlist}")
     for i, currentnum in zip(range(4), numberlist):
         if currentnum in guess_this_list and currentnum == guess_this_list[i]:
             print(f"{currentnum} is correct number and position")
