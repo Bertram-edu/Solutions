@@ -14,25 +14,27 @@ Fortsæt derefter med den næste fil."""
 import tkinter as tk
 
 padx = 5
-pady = 15
+pady = 10
 
 
 main_window = tk.Tk()
 main_window.title("my first GUI")
-main_window.geometry("500x500")
+main_window.geometry("250x250")
 
 
-frame1 = tk.LabelFrame(main_window, text="Container")
+frame1 = tk.LabelFrame(main_window, labelanchor="nw", text="Container")
 frame1.grid(row=0, column=0, padx=padx, pady=pady)
 
+frame2 = tk.Frame(frame1, borderwidth=0, padx=15, pady=2)
+frame2.grid(row=0, column=0)
 
-label1 = tk.Label(frame1, text="id")
+label1 = tk.Label(frame2, text="id")
 label1.grid(row=0, column=0, padx=padx, pady=pady)
 
-entry1 = tk.Entry(frame1)
+entry1 = tk.Entry(frame2, width=4)
 entry1.grid(row=1, column=0, padx=padx, pady=pady)
 
-button1 = tk.Button(frame1, text="click me NOW :-:")
+button1 = tk.Button(frame2, text="Create")
 button1.grid(row=2, column=0, padx=padx, pady=pady)
 
 
