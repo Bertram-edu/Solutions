@@ -23,3 +23,15 @@ Når dit program er færdigt, skal du skubbe det til dit github-repository.
 Send derefter denne Teams-meddelelse til din lærer: <filename> færdig
 Fortsæt derefter med den næste fil."""
 
+import tkinter as tk
+
+
+
+main_window = tk.Tk()
+main_window.title("my first GUI")
+main_window.geometry("500x500")
+
+
+
+
+
