@@ -28,8 +28,8 @@ frame1.grid(row=0, column=0, padx=padx, pady=pady)
 frame2 = tk.Frame(frame1, borderwidth=0, padx=15, pady=2)
 frame2.grid(row=0, column=0)
 
-label1 = tk.Label(frame2, text="id")
-label1.grid(row=0, column=0, padx=padx, pady=pady)
+label1 = tk.Label(frame2, text="Id")
+label1.grid(row=0, column=0, padx=padx, pady=2)
 
 entry1 = tk.Entry(frame2, width=4)
 entry1.grid(row=1, column=0, padx=padx, pady=pady)
