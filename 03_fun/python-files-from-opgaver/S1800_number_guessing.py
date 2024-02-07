@@ -32,7 +32,7 @@ correctnumberlist = []
 
 for i in range(4):
     randomnumber = random.randint(1, 9)
-    while randomnumber in guess_this_list and len(guess_this_list) >= 1:
+    while randomnumber in guess_this_list: # and len(guess_this_list) >= 1:
         randomnumber = random.randint(1, 9)
     guess_this_list.append(randomnumber)
 
