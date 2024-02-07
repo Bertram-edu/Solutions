@@ -34,6 +34,7 @@ pady = 4
 
 
 def clear_all_entry_boxes():
+    print("all entries emptied")
     id_entry1.delete(0, tk.END)
     weight_entry1.delete(0, tk.END)
     destination_entry1.delete(0, tk.END)
