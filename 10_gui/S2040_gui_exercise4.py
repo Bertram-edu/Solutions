@@ -23,6 +23,8 @@ Fortsæt derefter med den næste fil."""
 import tkinter as tk
 from tkinter import ttk
 
+import random
+
 
 def clear_all_entry_boxes():
     print("all entries emptied")
@@ -41,6 +43,15 @@ def read_table(tree):
             tree.insert(parent='', index='end', text='', values=record, tags=('oddrow',))
         count += 1
 
+def edit_record(event, tree):
+    index_selected = tree.focus()
+    values = tree.item(index_selected, "values")
+    id_entry1.delete(0, tk.END)
+    weight_entry1.delete(0, tk.END)
+    destination_entry1.delete(0, tk.END)
+    id_entry1.insert(0, values[0])
+    weight_entry1.insert(0, values[1])
+    destination_entry1.insert(0, values[2])
 
 
 
@@ -50,8 +61,8 @@ padx = 8
 pady = 4
 
 # rows odd or even
-oddrow = "#ddeedd"
-evenrow = "#cce0cc"
+oddrow = "#cccccc"
+evenrow = "#dddddd"
 
 # row height
 treeview_rowheight = 24
@@ -61,9 +72,42 @@ treeview_background = "#eeeeee"
 treeview_foreground = "black"
 treeview_selected = "#773333"
 
+
+
+# keeping in a txt file so there is no giant list
+f = open("destinations_for_S2040_gui_exercise4.txt", "r")
+temp_destination = f.readlines()
+f.close()
+
+destination = []
+for line in range(len(temp_destination)):
+    destination.append(temp_destination[line].replace("\n", ""))
+
+
+
+
+
+
+# amount_of_rows = int(input("how many entries? type here: ")) # uncomment if you want to chose what amount of rows of entries there is
+amount_of_rows = 10 # manually chose the amount on each startup
+
 data_list = []
-data_list.append(("1", "2", "3"))
-data_list.append(("4", "5", "6"))
+counter = 1
+
+for amount in range(amount_of_rows):
+    data_id = counter
+    max_number = random.randint(2, 10)  # not needed just add some more lower numbers sicne there was a lot of higher numbers
+    data_weight = random.randint(1, max_number)
+    data_weight *= 1000
+    data_destination = random.choice(destination)
+    counter += 1
+    data_list.append((data_id, data_weight, data_destination))
+
+
+
+# data_list.append(("1", "2", "3"))
+# data_list.append(("4", "5", "6"))
+# data_list.append(("7", "8", "9"))
 
 
 main_window = tk.Tk()
@@ -111,6 +155,13 @@ tree_1.heading("#0", text="", anchor=tk.W)
 tree_1.heading("id", text="Id", anchor=tk.CENTER)
 tree_1.heading("weight", text="Weight", anchor=tk.CENTER)
 tree_1.heading("destination", text="Destination", anchor=tk.CENTER)
+
+# treeview tags
+
+tree_1.tag_configure("oddrow", background=oddrow)
+tree_1.tag_configure("evenrow", background=evenrow)
+
+tree_1.bind("<ButtonRelease-1>", lambda event: edit_record(event, tree_1))
 
 # labels and entries
 labels_and_entries_frame1 = tk.Frame(labelframe1)

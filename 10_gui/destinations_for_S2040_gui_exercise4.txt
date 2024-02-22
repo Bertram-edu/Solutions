@@ -1,0 +1,50 @@
+Shanghai
+Singapore City
+Rotterdam
+Hamburg
+Busan
+Dubai
+Hong Kong
+Antwerp
+Kaohsiung
+Qingdao
+Tianjin
+Ningbo-Zhoushan
+Guangzhou
+Shenzhen
+Tokyo
+Los Angeles
+Long Beach
+New York City
+Houston
+Savannah
+Charleston
+Vancouver
+Montreal
+Sydney
+Melbourne
+Brisbane
+Rotterdam
+Barcelona
+Valencia
+Marseille
+Genoa
+Hamburg
+Le Havre
+Alexandria
+Istanbul
+Piraeus
+Santos
+Rio de Janeiro
+Buenos Aires
+Cartagena
+Callao
+Panama City
+Port Klang
+Jakarta
+Mumbai
+Chennai
+Karachi
+Colombo
+Durban
+Cape Town
