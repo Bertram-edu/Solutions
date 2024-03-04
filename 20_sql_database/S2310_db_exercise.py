@@ -33,6 +33,7 @@ Når dit program er færdigt, skal du skubbe det til dit github-repository.
 Send derefter denne Teams-besked til din lærer: <filename> færdig
 Fortsæt derefter med den næste fil.
 """
+import random
 
 from sqlalchemy.orm import declarative_base, Session
 from sqlalchemy import Column, String, Integer
@@ -41,6 +42,33 @@ from sqlalchemy import delete
 
 Database = "sqlite:///S2311_my_second_sql_database.db"
 Base = declarative_base()
+
+f = open("S2310_db_exercise_customer_names.txt", "r")
+temp_customer_names = f.readlines()
+f.close()
+
+customer_names = []
+for line in temp_customer_names:
+    customer_names.append(line.replace("\n", ""))
+
+f = open("S2310_db_exercise_address_names.txt", "r")
+temp_address_names = f.readlines()
+f.close()
+
+address_names = []
+for line in temp_address_names:
+    address_names.append(line.replace("\n", ""))
+
+f = open("S2310_db_exercise_brand_names.txt", "r")
+temp_brand_names = f.readlines()
+f.close()
+
+brand_names = []
+for line in temp_brand_names:
+    brand_names.append(line.replace("\n", ""))
+
+# print(f"customers: {customer_names} \n\naddresses: {address_names} \n\nbrands: {brand_names}")
+
 
 
 class Customer(Base):
@@ -68,12 +96,21 @@ class Product(Base):
         return f"Product({self.id=}    {self.product_number=}    {self.price=}    {self.brand=})"
 
 
-def create_test_data():
+def create_test_data(amount_of_customers, amount_of_products):
+    amount_of_customers -= 1
+    amount_of_products -= 1
     with Session(engine) as session:
         new_items = []
         #  customers
-        new_items.append(Customer(name="person 1", address="123 nothington st", age=20))
-        new_items.append(Customer(name="person 2", address="321 nothington st", age=23))
+        for i in range(len(customer_names)):
+            if amount_of_customers >= 0:
+                customer_name = random.choice(customer_names)
+                address_name = random.choice(address_names)
+                customer_age = random.randint(0, 130)
+                amount_of_customers -= 1
+                new_items.append(Customer(name=customer_name, address=address_name, age=customer_age))
+            else:
+                break
         #  products
         new_items.append(Product(product_number=1, price=100, brand="sneakys"))
         new_items.append(Product(product_number=2, price=500, brand="keanys"))
@@ -85,11 +122,13 @@ def create_test_data():
 def delete_all_records(classparam):
     with Session(engine) as session:
         if classparam == Customer:
-
+            session.execute(delete(Customer))
+            session.commit()
         elif classparam == Product:
-            Product.delete()
+            session.execute(delete(Product))
+            session.commit()
         else:
-            print("nothing was deleted")
+            print(f"{classparam} is not a table and therefor nothing was deleted")
 
 def select_all(classparam):
     with Session(engine) as session:
@@ -104,13 +143,12 @@ engine = create_engine(Database, echo=False, future=True)
 Base.metadata.create_all(engine)
 
 delete_all_records(Customer)
+delete_all_records(Product)
 
-#create_test_data()
+create_test_data(10, 10)
 
 print(select_all(Customer))
 
-print()
-print()
-print()
+print("\n\n\n")
 
 print(select_all(Product))
