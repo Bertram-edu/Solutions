@@ -67,12 +67,11 @@ brand_names = []
 for line in temp_brand_names:
     brand_names.append(line.replace("\n", ""))
 
+
 # print(f"customers: {customer_names} \n\naddresses: {address_names} \n\nbrands: {brand_names}")
 
 
-
 class Customer(Base):
-
     __tablename__ = "customers"
     id = Column(Integer, primary_key=True)
     name = Column(String)
@@ -96,28 +95,34 @@ class Product(Base):
         return f"Product({self.id=}    {self.product_number=}    {self.price=}    {self.brand=})"
 
 
-def create_test_data(amount_of_customers, amount_of_products):
-    amount_of_customers -= 1
-    amount_of_products -= 1
+def create_test_data(amount_of_customers, amount_of_products, customers_delete_old=False, product_delete_old=False):
+    product_counter = 0
     with Session(engine) as session:
+
+        if customers_delete_old is True:
+            delete_all_records(Customer)
+        if product_delete_old is True:
+            delete_all_records(Product)
+
         new_items = []
         #  customers
-        for i in range(len(customer_names)):
-            if amount_of_customers >= 0:
-                customer_name = random.choice(customer_names)
-                address_name = random.choice(address_names)
-                customer_age = random.randint(0, 130)
-                amount_of_customers -= 1
-                new_items.append(Customer(name=customer_name, address=address_name, age=customer_age))
-            else:
-                break
+        for i in range(amount_of_customers):
+            customer_name = random.choice(customer_names)
+            address_name = random.choice(address_names)
+            customer_age = random.randint(0, 130)
+            new_items.append(Customer(name=customer_name, address=address_name, age=customer_age))
         #  products
-        new_items.append(Product(product_number=1, price=100, brand="sneakys"))
-        new_items.append(Product(product_number=2, price=500, brand="keanys"))
+        for i in range(amount_of_products):
+            product_counter += 1
+            what_price = random.randint(0, 100)
+            what_price *= 100
+            brand_name = random.choice(brand_names)
+            new_items.append(Product(product_number=product_counter, price=what_price, brand=brand_name))
 
         #  adding it to the database
         session.add_all(new_items)
         session.commit()
+
 
 def delete_all_records(classparam):
     with Session(engine) as session:
@@ -129,6 +134,7 @@ def delete_all_records(classparam):
             session.commit()
         else:
             print(f"{classparam} is not a table and therefor nothing was deleted")
+
 
 def select_all(classparam):
     with Session(engine) as session:
@@ -142,10 +148,10 @@ def select_all(classparam):
 engine = create_engine(Database, echo=False, future=True)
 Base.metadata.create_all(engine)
 
-delete_all_records(Customer)
-delete_all_records(Product)
+#  delete_all_records(Customer)
+#  delete_all_records(Product)
 
-create_test_data(10, 10)
+create_test_data(10, 10, True, True)
 
 print(select_all(Customer))
 
