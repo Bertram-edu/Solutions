@@ -3,7 +3,6 @@ from sqlalchemy import Column
 from sqlalchemy import String, Integer
 
 
-Database = "sqlite:///danskcargo.db"
 Base = declarative_base()
 
 
