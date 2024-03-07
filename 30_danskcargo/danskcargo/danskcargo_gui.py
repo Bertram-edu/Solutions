@@ -67,6 +67,52 @@ tree_container.heading("destination", text="Destination", anchor=tk.CENTER)
 tree_container.tag_configure("oddrow", background=oddrow)
 tree_container.tag_configure("evenrow", background=evenrow)
 
+# Define Frame which contains Labels entires and buttons
+controls_frame_container = tk.Frame(frame_container)
+controls_frame_container.grid(row=3, column=0, padx=padx, pady=pady)
+
+# Define Frame which contains Labels (text fields) and entries (input fields)
+edit_frame_container = tk.Frame(controls_frame_container)
+edit_frame_container.grid(row=0, column=0, padx=padx, pady=pady)
+
+# label and entry for container id
+label_container_id = tk.Label(edit_frame_container, text="Id")
+label_container_id.grid(row=0, column=0, padx=padx, pady=pady)
+entry_container_id = tk.Entry(edit_frame_container, width=4, justify="right")
+entry_container_id.grid(row=1, column=0, padx=padx, pady=pady)
+
+# label and entry for container weight
+label_container_weight = tk.Label(edit_frame_container, text="Weight")
+label_container_weight.grid(row=0, column=1, padx=padx, pady=pady)
+entry_container_weight = tk.Entry(edit_frame_container, width=8, justify="right")
+entry_container_weight.grid(row=1, column=1, padx=padx, pady=pady)
+
+# label and entry for container destination
+label_container_destination = tk.Label(edit_frame_container, text="Destination")
+label_container_destination.grid(row=0, column=2, padx=padx, pady=pady)
+entry_container_destination = tk.Entry(edit_frame_container, width=20)
+entry_container_destination.grid(row=1, column=2, padx=padx, pady=pady)
+
+# label and entry for container wheater
+label_container_weather = tk.Label(edit_frame_container, text="Weather")
+label_container_weather.grid(row=0, column=3, padx=padx, pady=pady)
+entry_container_weather = tk.Entry(edit_frame_container, width=14)
+entry_container_weather.grid(row=1, column=3, padx=padx, pady=pady)
+
+# Define Frame which contains buttons
+button_frame_container = tk.Frame(controls_frame_container)
+button_frame_container.grid(row=1, column=0, padx=padx, pady=pady)
+# Define buttons
+button_create_container = tk.Button(button_frame_container, text="Create")
+button_create_container.grid(row=0, column=1, padx=padx, pady=pady)
+button_update_container = tk.Button(button_frame_container, text="Update")
+button_update_container.grid(row=0, column=2, padx=padx, pady=pady)
+button_delete_container = tk.Button(button_frame_container, text="Delete")
+button_delete_container.grid(row=0, column=3, padx=padx, pady=pady)
+button_clear_boxes = tk.Button(button_frame_container, text="Clear Entry Boxes")
+button_clear_boxes.grid(row=0, column=4, padx=padx, pady=pady)
+
+
 # endregion container widgets
 
 # region main program
