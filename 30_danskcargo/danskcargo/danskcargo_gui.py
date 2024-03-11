@@ -18,9 +18,50 @@ evenrow = "#cccccc"
 
 # region container functions
 
+def read_container_entiries(): # read content of entry boxes
+    return entry_container_id.get(), entry_container_weight.get(), entry_container_destination.get(),
+
+def clear_container_entires(): # clear all entry boxes
+    entry_container_id.delete(0, tk.END)
+    entry_container_weight.delete(0, tk.END)
+    entry_container_destination.delete(0, tk.END)
+    entry_container_weather.delete(0, tk.END)
+
+def write_container_entries(values): # fill entry boxes
+    entry_container_id.insert(0, values[0])
+    entry_container_weight.insert(0, values[1])
+    entry_container_destination.insert(0, values[2])
+
+def edit_container(event, tree):
+    index_selected = tree.focus()
+    values = tree.item(index_selected, "values")
+    clear_container_entires()
+    write_container_entries(values)
+
+
+
+
 # endregion container functions
 
 # region common functions
+
+def read_table(tree, class_): # fill tree with the data from the database
+    count = 0
+    result = dcsql.select_all(class_)
+    for record in result:
+        if record.valid():
+            if count % 2 == 0:
+                tree.insert(parent="", index="end", iid=str(count), text="", values=record.convert_to_tuple(), tags=("evenrow",))
+            else:
+                tree.insert(parent="", index="end", iid=str(count), text="", values=record.convert_to_tuple(), tags=("oddrow",))
+            count += 1
+
+def empty_treeview(tree):
+    tree.delete(*tree.get_children())
+
+def refresh_treeview(tree, class_):
+    empty_treeview(tree)
+    read_table(tree, class_)
 
 # endregion common functions
 
@@ -67,6 +108,8 @@ tree_container.heading("destination", text="Destination", anchor=tk.CENTER)
 tree_container.tag_configure("oddrow", background=oddrow)
 tree_container.tag_configure("evenrow", background=evenrow)
 
+tree_container.bind("<ButtonRelease-1>", lambda event: edit_container(event, tree_container))
+
 # Define Frame which contains Labels entires and buttons
 controls_frame_container = tk.Frame(frame_container)
 controls_frame_container.grid(row=3, column=0, padx=padx, pady=pady)
@@ -109,7 +152,7 @@ button_update_container = tk.Button(button_frame_container, text="Update")
 button_update_container.grid(row=0, column=2, padx=padx, pady=pady)
 button_delete_container = tk.Button(button_frame_container, text="Delete")
 button_delete_container.grid(row=0, column=3, padx=padx, pady=pady)
-button_clear_boxes = tk.Button(button_frame_container, text="Clear Entry Boxes")
+button_clear_boxes = tk.Button(button_frame_container, text="Clear Entry Boxes", command=clear_container_entires)
 button_clear_boxes.grid(row=0, column=4, padx=padx, pady=pady)
 
 
@@ -118,6 +161,7 @@ button_clear_boxes.grid(row=0, column=4, padx=padx, pady=pady)
 # region main program
 
 if __name__ == "__main__":  # Executed when invoked directly. We use this so main_window.mainloop() does not keep our unit tests from running.
+    refresh_treeview(tree_container, dcd.Container)
     main_window.mainloop()  # Wait for button clicks and act upon them
 
 # endregion main program
