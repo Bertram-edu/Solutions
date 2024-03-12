@@ -81,50 +81,45 @@ def delete_soft_container(container):
 # endregion container
 
 
-# region container
+# region aircraft
 
 def update_container(aircraft):
-    # update a record in the container table
+    # update a record in the aircraft table
     with Session(engine) as session:
-        session.execute(update(Container).where(Container.id == container.id).values(weight=container.weight, destination=container.destination))
+        session.execute(update(Aircraft).where(Aircraft.id == aircraft.id).values(max_cargo_weight=aircraft.max_cargo_weight, registration=aircraft.registration))
         session.commit()  # makes changes permanent in database
 
 def delete_hard_container(aircraft):
-    # delete a record in the container table
+    # delete a record in the aircraft table
     with Session(engine) as session:
-        session.execute(delete(Container).where(Container.id == container.id))
+        session.execute(delete(Aircraft).where(Aircraft.id == aircraft.id))
         session.commit()  # makes changes permanent in database
 
 def delete_soft_container(aircraft):
-    # soft delete a record in the container table by setting its weight to -1
+    # soft delete a record in the aircraft table by setting its max_cargo_weight to -1
     with Session(engine) as session:
-        session.execute(update(Container).where(Container.id == container.id).values(weight=-1, destination=container.destination))
+        session.execute(update(Aircraft).where(Aircraft.id == aircraft.id).values(max_cargo_weight=-1, registration=aircraft.registration))
         session.commit()  # makes changes permanent in database
 
-# endregion container
+# endregion aircraft
 
 
-# region container
+# region transport
 
 def update_container(transport):
-    # update a record in the container table
+    # update a record in the transport table
     with Session(engine) as session:
-        session.execute(update(Container).where(Container.id == container.id).values(weight=container.weight, destination=container.destination))
+        session.execute(update(Container).where(Container.id == transport.id).values(date=transport.date, container_id=transport.container_id, aircraft_id=transport.aircraft_id))
         session.commit()  # makes changes permanent in database
 
 def delete_hard_container(transport):
-    # delete a record in the container table
+    # delete a record in the transport table
     with Session(engine) as session:
-        session.execute(delete(Container).where(Container.id == container.id))
+        session.execute(delete(Transport).where(Transport.id == transport.id))
         session.commit()  # makes changes permanent in database
 
-def delete_soft_container(transport):
-    # soft delete a record in the container table by setting its weight to -1
-    with Session(engine) as session:
-        session.execute(update(Container).where(Container.id == container.id).values(weight=-1, destination=container.destination))
-        session.commit()  # makes changes permanent in database
 
-# endregion container
+# endregion transport
 
 
 if __name__ == "__main__":  # Executed when invoked directly
