@@ -5,6 +5,9 @@ from danskcargo_data import Container, Base
 from sqlalchemy.engine import Engine
 from sqlalchemy import event
 
+from datetime import date
+from danskcargo_data import Container, Aircraft, Transport, Base
+
 
 @event.listens_for(Engine, "connect")
 def set_sqlite_pragma(dbapi_connection, connection_record):
@@ -19,10 +22,14 @@ Database = "sqlite:///danskcargo.db"
 def create_test_data():  # Optional. Used to test database functions before gui is ready.
     with Session(engine) as session:
         new_items = []
-        new_items.append(Container(weight=1200, destination="Oslo"))
-        new_items.append(Container(weight=700, destination="Helsinki"))
-        new_items.append(Container(weight=1800, destination="Helsinki"))
-        new_items.append(Container(weight=1000, destination="Helsinki"))
+        # new_items.append(Container(weight=1200, destination="Oslo"))
+        # new_items.append(Container(weight=700, destination="Helsinki"))
+        # new_items.append(Container(weight=1800, destination="Helsinki"))
+        # new_items.append(Container(weight=1000, destination="Helsinki"))
+        new_items.append(Aircraft(max_cargo_weight=2000, registration="OY-CBS"))
+        new_items.append(Aircraft(max_cargo_weight=3000, registration="OY-THR"))
+        a_date = date(day=10, month=12, year=2022)
+        new_items.append(Transport(date=a_date, container_id=2, aircraft_id=1))
         session.add_all(new_items)
         session.commit()
 
@@ -74,12 +81,60 @@ def delete_soft_container(container):
 # endregion container
 
 
+# region container
+
+def update_container(aircraft):
+    # update a record in the container table
+    with Session(engine) as session:
+        session.execute(update(Container).where(Container.id == container.id).values(weight=container.weight, destination=container.destination))
+        session.commit()  # makes changes permanent in database
+
+def delete_hard_container(aircraft):
+    # delete a record in the container table
+    with Session(engine) as session:
+        session.execute(delete(Container).where(Container.id == container.id))
+        session.commit()  # makes changes permanent in database
+
+def delete_soft_container(aircraft):
+    # soft delete a record in the container table by setting its weight to -1
+    with Session(engine) as session:
+        session.execute(update(Container).where(Container.id == container.id).values(weight=-1, destination=container.destination))
+        session.commit()  # makes changes permanent in database
+
+# endregion container
+
+
+# region container
+
+def update_container(transport):
+    # update a record in the container table
+    with Session(engine) as session:
+        session.execute(update(Container).where(Container.id == container.id).values(weight=container.weight, destination=container.destination))
+        session.commit()  # makes changes permanent in database
+
+def delete_hard_container(transport):
+    # delete a record in the container table
+    with Session(engine) as session:
+        session.execute(delete(Container).where(Container.id == container.id))
+        session.commit()  # makes changes permanent in database
+
+def delete_soft_container(transport):
+    # soft delete a record in the container table by setting its weight to -1
+    with Session(engine) as session:
+        session.execute(update(Container).where(Container.id == container.id).values(weight=-1, destination=container.destination))
+        session.commit()  # makes changes permanent in database
+
+# endregion container
+
+
 if __name__ == "__main__":  # Executed when invoked directly
     # The next 2 lines are needed _after_ data classes / sql tables were defined
     engine = create_engine(Database, echo=False, future=True)
     Base.metadata.create_all(engine)
     # create_test_data()
     print(select_all(Container))
+    # print(select_all(Aircraft))
+    # print(select_all(Transport))
     print(get_record(Container, 2))
 else:  # Executed when imported
     engine = create_engine(Database, echo=False, future=True)  # https://docs.sqlalchemy.org/en/14/tutorial/engine.html   The start of any SQLAlchemy application is an object called the Engine. This object acts as a central source of connections to a particular database, providing both a factory as well as a holding space called a connection pool for these database connections. The engine is typically a global object created just once for a particular database server, and is configured using a URL string which will describe how it should connect to the database host or backend.
