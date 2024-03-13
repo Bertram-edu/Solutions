@@ -55,7 +55,7 @@ class Aircraft(Base):
     @staticmethod
     def convert_from_tuple(tuple_):
         try:
-            max_cargo_weight = int(tuple[1])
+            max_cargo_weight = int(tuple_[1])
             if max_cargo_weight < 0:
                 messagebox.showwarning("", "max cargo weight must not be negative")
             else:
