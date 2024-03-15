@@ -114,8 +114,9 @@ def create_test_data(amount_of_customers, amount_of_products, customers_delete_o
         #  products
         for i in range(amount_of_products):
             product_counter += 1
-            what_price = random.randint(0, 100)
-            what_price *= 100
+            what_price = random.randint(0, 250)
+            print(what_price)
+            what_price *= 10
             brand_name = random.choice(brand_names)
             new_items.append(Product(product_number=product_counter, price=what_price, brand=brand_name))
 
@@ -153,8 +154,16 @@ Base.metadata.create_all(engine)
 
 create_test_data(10, 10, True, True)
 
-print(select_all(Customer))
+# print(select_all(Customer))
+#
+# print("\n\n\n")
+#
+# print(select_all(Product))
 
-print("\n\n\n")
+print("\ncustomers:")
+for record in select_all(Customer):
+    print(record)
 
-print(select_all(Product))
+print("\nproducts:")
+for record in select_all(Product):
+    print(record)
